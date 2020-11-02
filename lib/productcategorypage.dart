@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:building_materials_app/actualproduct.dart';
+import 'package:building_materials_app/globalvars.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -57,7 +58,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
           }
         }
       //}
-      print(series_product);
+      // print(series_product);
 
       setState(() {
         _loading=false;
@@ -83,7 +84,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
         ),
         centerTitle: true,
         actions: [
-          Icon(Icons.search),
+          // Icon(Icons.search),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Icon(Icons.shopping_cart),
@@ -100,8 +101,8 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
             if(j[1].length!=0) {
               var series_no = j[0];
               var series_list = j[1];
-              print(series_no);
-              print(series_list);
+              // print(series_no);
+              // print(series_list);
 
                 if (series_no != "0") {
                   return Column(
@@ -123,79 +124,113 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: series_list.map<Widget>((i){
+                              var innerprice;
+                              var stock_availability;
+                              // print(i);
+                              for(int x=0; x<i[4].length;x++){
+                                 // print(i[4][x][1]);
+                                if(GlobalVariables.countryId.toString()==i[4][x][1]){
+                                  innerprice=i[4][x][4];
+                                  // print("hii");
+                                  stock_availability=i[4][x][5];
+                                }
+                              }
                               return Padding(
                                 padding: const EdgeInsets.only(right: 20.0),
-                                child: Container(
-                                  height: 190,
-                                  width: 160,
-                                  constraints: BoxConstraints(
-                                      minWidth: 100, maxWidth: 200),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    border: Border.all(
-                                      color: Colors.grey[350],
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: FlatButton(
-                                      padding: const EdgeInsets.all(0.0),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
-                                        );
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .center,
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .center,
-                                        children: <Widget>[
-                                          Image.network(
-                                            'http://huzefam.sg-host.com/'+i[3],
-                                            height: 100,
-                                            width: 100,
-                                          ),
-                                          SizedBox(height: 5,),
-                                          SizedBox(
-                                            width: 180,
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Text(
-                                                    i[1],
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Colors.grey[600],
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 200,
+                                      width: 160,
+                                      constraints: BoxConstraints(
+                                          minWidth: 100, maxWidth: 200),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        border: Border.all(
+                                          color: Colors.grey[350],
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: FlatButton(
+                                          padding: const EdgeInsets.all(0.0),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                                            );
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .center,
+                                            children: <Widget>[
+                                              Image.network(
+                                                'http://huzefam.sg-host.com/'+i[3],
+                                                height: 100,
+                                                width: 100,
+                                              ),
+                                              SizedBox(height: 5,),
+                                              SizedBox(
+                                                width: 180,
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        i[1],
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.grey[600],
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(height: 5,),
-                                          SizedBox(
-                                            width: 150,
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Text(
-                                                    '85.00/doz',
-                                                    style: TextStyle(
-                                                      fontSize: 17,
-                                                      fontWeight: FontWeight.bold,
+                                              ),
+                                              SizedBox(height: 5,),
+                                              SizedBox(
+                                                width: 150,
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        innerprice.toString()+" "+GlobalVariables.currency,
+                                                        style: TextStyle(
+                                                          fontSize: 17,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    (stock_availability=="1")?Container():Center(
+                                      child: Container(
+                                        decoration: new BoxDecoration(
+                                          color: Colors.red[300].withOpacity(0.40),
+                                        ),
+                                        height: 25,
+                                        width: 160,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Out of Stock',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: 16,
+                                            letterSpacing: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               );
                             }).toList(),
@@ -208,7 +243,18 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                 else {
                   return Column(
                     children: series_list.map<Widget>((i){
+                      //print(i);
+                      var innerprice;
+                      var stock_availability;
                       print(i);
+                      for(int x=0; x<i[4].length;x++){
+                        // print(i[4][x][1]);
+                        if(GlobalVariables.countryId.toString()==i[4][x][1]){
+                          innerprice=i[4][x][4];
+                          print("hii");
+                          stock_availability=i[4][x][5];
+                        }
+                      }
                       return FlatButton(
                         padding: EdgeInsets.all(0),
                         onPressed: (){
@@ -229,12 +275,45 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                 ),
                                 //SizedBox(width: 15,),
                                 Expanded(
-                                  child: Text(
-                                    i[1].toString(),
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey[800],
-                                    ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        i[1].toString(),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                      SizedBox(height: 2,),
+                                      Text(
+                                        innerprice.toString()+" "+GlobalVariables.currency,
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      (stock_availability=="1")?Container():Center(
+                                        child: Container(
+                                          decoration: new BoxDecoration(
+                                            color: Colors.red[300].withOpacity(0.40),
+                                          ),
+                                          height: 25,
+                                          width: double.infinity,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            'Out of Stock',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+                                              fontSize: 16,
+                                              letterSpacing: 1.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+
                                   ),
                                 ),
                               ],

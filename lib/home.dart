@@ -252,73 +252,76 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Stack(
                     children: <Widget>[
-                      Container(
-                        height: 200,
-                        width: 160,
-                        constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(
-                            color: Colors.grey[350],
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Container(
+                          height: 200,
+                          width: 160,
+                          constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(
+                              color: Colors.grey[350],
+                            ),
+                           // color: Colors.grey[200].withOpacity(0.40),
                           ),
-                         // color: Colors.grey[200].withOpacity(0.40),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: FlatButton(
-                            padding: const EdgeInsets.all(0.0),
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ActualProductPage()),
-                              );
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  'assets/images/6061102/1.jpg',
-                                  height: 100,
-                                  width: 100,
-                                ),
-                                SizedBox(height: 5,),
-                                SizedBox(
-                                  width: 180,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          'Shovel Pointed Popular Handle -S503L (price per dozen)',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.grey[600],
-                                            //fontStyle: FontStyle.normal,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: FlatButton(
+                              padding: const EdgeInsets.all(0.0),
+                              onPressed: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ActualProductPage()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/images/6061102/1.jpg',
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                  SizedBox(height: 5,),
+                                  SizedBox(
+                                    width: 180,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            'Shovel Pointed Popular Handle -S503L (price per dozen)',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.grey[600],
+                                              //fontStyle: FontStyle.normal,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 5,),
-                                SizedBox(
-                                  width: 150,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          '85.00/doz',
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
+                                  SizedBox(height: 5,),
+                                  SizedBox(
+                                    width: 150,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(
+                                            '85.00/doz',
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
