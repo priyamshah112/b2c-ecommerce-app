@@ -1,6 +1,8 @@
 import 'package:building_materials_app/globalvars.dart';
 import 'package:building_materials_app/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+
 class AddToCartPage extends StatefulWidget {
   @override
   _AddToCartPageState createState() => _AddToCartPageState();
@@ -235,7 +237,9 @@ class _AddToCartPageState extends State<AddToCartPage> {
             trailing: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  FlutterOpenWhatsapp.sendSingleMessage("917738562184", "Hello");
+                },
                 color: Colors.green[400],
                 textColor: Colors.white,
                 child: Text(
