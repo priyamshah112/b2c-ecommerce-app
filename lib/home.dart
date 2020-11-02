@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:building_materials_app/aboutus.dart';
 import 'package:building_materials_app/actualproduct.dart';
 import 'package:building_materials_app/addtocart.dart';
 import 'package:building_materials_app/category.dart';
@@ -75,6 +76,52 @@ class _HomePageState extends State<HomePage> {
           //Icon(Icons.more_vert),
         ],
         backgroundColor: Colors.black87,
+      ),
+      drawer: Container(
+        width: 280,
+        child: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                  child: Expanded(
+                    child: Text(
+                      'AY Building Materials',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black87,
+                ),
+              ),
+              ListTile(
+                title: Center(
+                  child: Text(
+                    'About Us',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                      letterSpacing: 0.7,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AboutUsPage()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(20,20,20,0),
