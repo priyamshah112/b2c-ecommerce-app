@@ -100,6 +100,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
       }
       print(price);
 
+      for(int i=0; i<GlobalVariables.order_list.length;i++){
+        if(widget.productId==GlobalVariables.order_list[i][0]){
+          quantity=GlobalVariables.order_list[i][1];
+          break;
+        }
+      }
 
       //product_category=decodedResponse['product_category'];
       //products_no_category=decodedResponse['products_no_category'];
@@ -640,50 +646,53 @@ class _ActualProductPageState extends State<ActualProductPage> {
           children: <Widget>[
             ButtonTheme(
               minWidth: 165,
-              child: RaisedButton(
-                onPressed: () {
-                  int addToCart(int productId, int quantity, double price, var product_name){
-                    bool flag = false;
-                    for(int i=0;i<GlobalVariables.order_list.length;i++) {
-                      if (productId == GlobalVariables.order_list[i][0]) {
-                        flag = true;
-                        break;
+              child: Hero(
+                tag: Text("addtocart"),
+                child: RaisedButton(
+                  onPressed: () {
+                    int addToCart(int productId, int quantity, double price, var product_name){
+                      bool flag = false;
+                      for(int i=0;i<GlobalVariables.order_list.length;i++) {
+                        if (productId == GlobalVariables.order_list[i][0]) {
+                          flag = true;
+                          break;
+                        }
+                      }
+                      if(flag==true){
+                        //success
+                        return 1;
+                      }
+                      else{
+                        //adding to cart
+                        var temp = [productId, quantity, price, quantity*price, product_name, images[0]];
+                        GlobalVariables.order_list.add(temp);
+                        return 0;
                       }
                     }
-                    if(flag==true){
-                      //success
-                      return 1;
-                    }
-                    else{
-                      //adding to cart
-                      var temp = [productId, quantity, price, quantity*price, product_name, images[0]];
-                      GlobalVariables.order_list.add(temp);
-                      return 0;
-                    }
-                  }
-                  int result=addToCart(widget.productId, quantity, price, product_name);
-                  print(GlobalVariables.order_list);
-                  print("result="+result.toString());
-                  setState(() {
-                  });
-                },
-                color: Colors.green,
-                textColor: Colors.white,
-                child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.shopping_cart,
-                        size: 20,
-                      ),
-                      SizedBox(width: 10,),
-                      Text(
-                          'Add to Cart',
-                        style: TextStyle(
-                          fontSize: 15,
-                          letterSpacing: 0.8,
+                    int result=addToCart(widget.productId, quantity, price, product_name);
+                    print(GlobalVariables.order_list);
+                    print("result="+result.toString());
+                    setState(() {
+                    });
+                  },
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.shopping_cart,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 10,),
+                        Text(
+                            'Add to Cart',
+                          style: TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ],
+                  ),
                 ),
               ),
             ),
@@ -692,30 +701,33 @@ class _ActualProductPageState extends State<ActualProductPage> {
               children: <Widget>[
                 ButtonTheme(
                   minWidth: 150,
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddToCartPage()),
-                      );
-                    },
-                    color: Colors.red[300],
-                    textColor: Colors.white,
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.date_range,
-                          size: 20,
-                        ),
-                        SizedBox(width: 10,),
-                        Text(
-                            'Buy now',
-                          style: TextStyle(
-                            fontSize: 16,
-                            letterSpacing: 0.8,
+                  child: Hero(
+                    tag: Text("buynow"),
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddToCartPage()),
+                        );
+                      },
+                      color: Colors.red[300],
+                      textColor: Colors.white,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.date_range,
+                            size: 20,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 10,),
+                          Text(
+                              'Buy now',
+                            style: TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 0.8,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
