@@ -22,6 +22,11 @@ class _HomePageState extends State<HomePage> {
     Category2(),
     Category3(),
   ];
+  List categoryNameList=[
+    'Bathroom Fittings',
+    'Building Materials',
+    'Fasteners'
+  ];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
@@ -154,13 +159,14 @@ class _HomePageState extends State<HomePage> {
               ),
               items: cardList.map((card){
                 var categoryId = cardList.indexOf(card);
+                var categoryName = categoryNameList[categoryId];
                 return Builder(
                     builder:(BuildContext context){
                       return InkWell(
                         onTap: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CategoryPage(categoryId: (categoryId+1))),
+                            MaterialPageRoute(builder: (context) => CategoryPage(categoryId: (categoryId+1),categoryName: categoryName)),
                           );
                         },
                         child: Container(

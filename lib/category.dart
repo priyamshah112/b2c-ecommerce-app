@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 import 'productcategorypage.dart';
 class CategoryPage extends StatefulWidget {
   int categoryId;
-  CategoryPage({Key key, this.categoryId}): super(key: key);
+  var categoryName;
+  CategoryPage({Key key, this.categoryId, this.categoryName}): super(key: key);
   @override
   _CategoryPageState createState() => _CategoryPageState();
 }
@@ -17,6 +18,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   var product_category=[];
   //var products_no_category=[];
+  var _loading=true;
 
   @override
   void initState() {
@@ -38,7 +40,7 @@ class _CategoryPageState extends State<CategoryPage> {
       product_category=decodedResponse['product_category'];
       //products_no_category=decodedResponse['products_no_category'];
       setState(() {
-
+        _loading=false;
       });
     }
     category_info();
@@ -57,7 +59,7 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
         ),
         title: Text(
-          'Category',
+          widget.categoryName,
           style: TextStyle(
             fontSize: 18,
             letterSpacing: 0.5,
@@ -65,10 +67,10 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         centerTitle: true,
         actions: [
-          Icon(
+          /*Icon(
             Icons.search,
             size: 22,
-          ),
+          ),*/
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Icon(
@@ -80,7 +82,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ],
         backgroundColor: Colors.black87,
       ),
-      body: Padding(
+      body: (_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
         child: Container(
           height: 700,
@@ -99,7 +101,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   if(i[3]==1){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProductCategoryPage(productCategoryId: int.parse(i[0]))),
+                      MaterialPageRoute(builder: (context) => ProductCategoryPage(productCategoryId: int.parse(i[0]), productCategoryName: i[1].toString())),
                     );
                   }
                   else{

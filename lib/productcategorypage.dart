@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 
 class ProductCategoryPage extends StatefulWidget {
   int productCategoryId;
-  ProductCategoryPage({Key key, this.productCategoryId}): super(key: key);
+  var productCategoryName;
+  ProductCategoryPage({Key key, this.productCategoryId, this.productCategoryName}): super(key: key);
   @override
   _ProductCategoryPageState createState() => _ProductCategoryPageState();
 }
@@ -80,7 +81,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
           ),
         ),
         title: Text(
-          'Single Handle',
+          widget.productCategoryName,
         ),
         centerTitle: true,
         actions: [

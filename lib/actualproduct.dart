@@ -44,6 +44,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
 
   int quantity = 0;
   var _loading=true;
+  var _addedToCart=false;
 
   @override
   void initState() {
@@ -103,6 +104,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
       for(int i=0; i<GlobalVariables.order_list.length;i++){
         if(widget.productId==GlobalVariables.order_list[i][0]){
           quantity=GlobalVariables.order_list[i][1];
+          _addedToCart=true;
           break;
         }
       }
@@ -217,6 +219,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                             quantityChange(widget.productId, quantity);
                             if(quantity==0){
                               GlobalVariables.order_list.removeWhere((product) => product[0] == widget.productId);
+                              _addedToCart=false;
                             }
                             print(GlobalVariables.order_list);
                           }
@@ -649,7 +652,8 @@ class _ActualProductPageState extends State<ActualProductPage> {
               child: Hero(
                 tag: Text("addtocart"),
                 child: RaisedButton(
-                  onPressed: () {
+                  disabledColor: Colors.blueGrey,
+                  onPressed: (_addedToCart==true)?null:() {
                     int addToCart(int productId, int quantity, double price, var product_name){
                       bool flag = false;
                       for(int i=0;i<GlobalVariables.order_list.length;i++) {
@@ -666,10 +670,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
                         //adding to cart
                         var temp = [productId, quantity, price, quantity*price, product_name, images[0]];
                         GlobalVariables.order_list.add(temp);
+                        _addedToCart=true;
                         return 0;
                       }
                     }
                     int result=addToCart(widget.productId, quantity, price, product_name);
+                    _addedToCart=true;
                     print(GlobalVariables.order_list);
                     print("result="+result.toString());
                     setState(() {
@@ -677,7 +683,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   },
                   color: Colors.green,
                   textColor: Colors.white,
-                  child: Row(
+                  child: (_addedToCart==false)?Row(
                       children: <Widget>[
                         Icon(
                           Icons.shopping_cart,
@@ -692,6 +698,21 @@ class _ActualProductPageState extends State<ActualProductPage> {
                           ),
                         ),
                       ],
+                  ):Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.check_circle,
+                        size: 20,
+                      ),
+                      SizedBox(width: 10,),
+                      Text(
+                        'Added to Cart',
+                        style: TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 0.8,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
