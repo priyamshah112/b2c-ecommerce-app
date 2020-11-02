@@ -51,6 +51,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
         //centerTitle: true,
         backgroundColor: Colors.white,
       ),
+    
       body: (GlobalVariables.order_list.length==0)?Center(child: Text("No items in the cart.")):Container(
         decoration: new BoxDecoration(color: Colors.grey[100]),
         child: Padding(
