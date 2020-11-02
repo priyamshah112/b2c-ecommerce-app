@@ -119,12 +119,14 @@ class _CategoryPageState extends State<CategoryPage> {
                           height: 90,
                           width: 90,
                         ),
-                        //SizedBox(width: 15,),
-                        Text(
-                          i[1].toString(),
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[800],
+                        SizedBox(width: 15,),
+                        Expanded(
+                          child: Text(
+                            i[1].toString(),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey[800],
+                            ),
                           ),
                         ),
                       ],

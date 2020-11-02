@@ -14,8 +14,9 @@ class ProductCategoryPage extends StatefulWidget {
 class _ProductCategoryPageState extends State<ProductCategoryPage> {
   var product=[];
   var series_product=[
-
   ];
+
+  var _loading=true;
 
   @override
   void initState() {
@@ -59,6 +60,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
       print(series_product);
 
       setState(() {
+        _loading=false;
       });
     }
     product_category_info();
@@ -90,7 +92,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
         ],
         backgroundColor: Colors.black87,
       ),
-      body: Padding(
+      body: (_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Padding(
         padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: ListView(
           scrollDirection: Axis.vertical,
@@ -141,8 +143,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                       onPressed: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>
-                                              ActualProductPage(productId: int.parse(i[0]))),
+                                          MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
                                         );
                                       },
                                       child: Column(
@@ -227,11 +228,13 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                   width: 90,
                                 ),
                                 //SizedBox(width: 15,),
-                                Text(
-                                  i[1].toString(),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.grey[800],
+                                Expanded(
+                                  child: Text(
+                                    i[1].toString(),
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.grey[800],
+                                    ),
                                   ),
                                 ),
                               ],

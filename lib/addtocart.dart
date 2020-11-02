@@ -34,8 +34,8 @@ class _AddToCartPageState extends State<AddToCartPage> {
             scrollDirection: Axis.vertical,
               children: (GlobalVariables.order_list.length==0)?Center(child: Text("No items in the cart.")):GlobalVariables.order_list.map((i){
                 return Card(
-                  child: SizedBox(
-                    height: 85,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
                     child: ListTile(
                       leading: ConstrainedBox(
                         constraints: BoxConstraints(
