@@ -59,7 +59,8 @@ class _AddToCartPageState extends State<AddToCartPage> {
           child: ListView(
             scrollDirection: Axis.vertical,
               children: GlobalVariables.order_list.map((i){
-                print(GlobalVariables.order_list);
+                print("sale="+i[6].toString());
+                print("oldprice="+i[7].toString());
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: Card(
@@ -91,7 +92,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                 ),
                               ),
                               SizedBox(height: 5),
-                              Row(
+                              (i[6]==0)?Row(
                                 children: <Widget>[
                                   Text(
                                     i[3].toString(),
@@ -109,6 +110,27 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                     ),
                                   ),
                                 ],
+                              ):Row(
+                                children: [
+                                  Text(
+                                    i[3].toString()+" "+GlobalVariables.currency+" ",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[600]
+                                    ),
+                                  ),
+                                  Text(
+                                    i[7].toString()+" "+GlobalVariables.currency,
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 16,
+                                      decorationThickness: 2,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                               Container(
                                   child: Row(
@@ -122,8 +144,8 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                       ),
                                       SizedBox(width: 8,),
                                       SizedBox(
-                                        width:30,
-                                        height:30,
+                                        width:25,
+                                        height:25,
                                         child: FloatingActionButton(
                                           heroTag: "minus"+i[0].toString(),
                                           onPressed: (){
@@ -166,8 +188,8 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width:30,
-                                        height:30,
+                                        width:25,
+                                        height:25,
                                         child: FloatingActionButton(
                                           heroTag: "plus"+i[0].toString(),
                                           onPressed: (){

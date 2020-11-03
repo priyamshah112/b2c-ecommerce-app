@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:building_materials_app/actualproduct.dart';
+import 'package:building_materials_app/addtocart.dart';
 import 'package:building_materials_app/globalvars.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -88,7 +89,15 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
           // Icon(Icons.search),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.shopping_cart),
+            child: IconButton(
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddToCartPage()),
+                  );
+                },
+                icon: Icon(Icons.shopping_cart)
+            ),
           ),
           //Icon(Icons.more_vert),
         ],
@@ -127,13 +136,24 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                             children: series_list.map<Widget>((i){
                               var innerprice;
                               var stock_availability;
+                              var sale=0;//0 means no sale(default), 1 means sale
+                              var saleprice;
+                              var salepercent;
                               // print(i);
                               for(int x=0; x<i[4].length;x++){
                                  // print(i[4][x][1]);
                                 if(GlobalVariables.countryId.toString()==i[4][x][1]){
-                                  innerprice=i[4][x][4];
+                                  innerprice=double.parse(i[4][x][4]);
                                   // print("hii");
                                   stock_availability=i[4][x][5];
+                                  if(i[4][x][6].length!=0){
+                                    sale=1;
+                                    saleprice=double.parse(i[4][x][6][1]);
+                                    print("saleprice="+saleprice.toString());
+                                    salepercent=(innerprice-saleprice)/innerprice*100;
+                                    salepercent = num.parse(salepercent.toStringAsFixed(0));
+                                    print(salepercent.toString());
+                                  }
                                 }
                               }
                               return Padding(
@@ -195,7 +215,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                                 width: 150,
                                                 child: Row(
                                                   children: <Widget>[
-                                                    Expanded(
+                                                    (sale==0)?Expanded(
                                                       child: Text(
                                                         innerprice.toString()+" "+GlobalVariables.currency,
                                                         style: TextStyle(
@@ -203,11 +223,53 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                                           fontWeight: FontWeight.bold,
                                                         ),
                                                       ),
+                                                    ):Row(
+                                                      children: [
+                                                        Text(
+                                                          innerprice.toString(),
+                                                          style: TextStyle(
+                                                            color: Colors.grey,
+                                                            decoration: TextDecoration.lineThrough,
+                                                            fontSize: 16,
+                                                            decorationThickness: 2,
+                                                            // fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                                          style: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.green[600]
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                             ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    (sale==0)?Container():Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: new BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5),
+                                          color: Colors.green[500],
+                                        ),
+                                        height: 20,
+                                        width: 30,
+                                        alignment: Alignment.topLeft,
+                                        child: Center(
+                                          child: Text(
+                                            salepercent.toString()+'%',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.white
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -247,13 +309,24 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                       //print(i);
                       var innerprice;
                       var stock_availability;
-                      print(i);
+                      var sale=0;//0 means no sale(default), 1 means sale
+                      var saleprice;
+                      var salepercent;
+                      // print(i);
                       for(int x=0; x<i[4].length;x++){
                         // print(i[4][x][1]);
                         if(GlobalVariables.countryId.toString()==i[4][x][1]){
-                          innerprice=i[4][x][4];
-                          print("hii");
+                          innerprice=double.parse(i[4][x][4]);
+                          // print("hii");
                           stock_availability=i[4][x][5];
+                          if(i[4][x][6].length!=0){
+                            sale=1;
+                            saleprice=double.parse(i[4][x][6][1]);
+                            print("saleprice="+saleprice.toString());
+                            salepercent=(innerprice-saleprice)/innerprice*100;
+                            salepercent = num.parse(salepercent.toStringAsFixed(0));
+                            print("salepercent="+salepercent.toString());
+                          }
                         }
                       }
                       return FlatButton(
@@ -287,11 +360,50 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                         ),
                                       ),
                                       SizedBox(height: 2,),
-                                      Text(
+                                      (sale==0)?Text(
                                         innerprice.toString()+" "+GlobalVariables.currency,
                                         style: TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
+                                        ),
+                                      ):Row(
+                                        children: [
+                                          Text(
+                                            innerprice.toString(),
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              decoration: TextDecoration.lineThrough,
+                                              fontSize: 16,
+                                              decorationThickness: 2,
+                                              // fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green[600]
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      (sale==0)?Container():Container(
+                                        decoration: new BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5),
+                                          color: Colors.green[500],
+                                        ),
+                                        height: 20,
+                                        width: 30,
+                                        alignment: Alignment.topLeft,
+                                        child: Center(
+                                          child: Text(
+                                            salepercent.toString()+'%',
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.white
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       (stock_availability=="1")?Container():Center(

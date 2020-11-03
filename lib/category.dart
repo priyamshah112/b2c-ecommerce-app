@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:building_materials_app/actualproduct.dart';
+import 'package:building_materials_app/addtocart.dart';
 import 'package:building_materials_app/bottomnav.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -73,9 +74,14 @@ class _CategoryPageState extends State<CategoryPage> {
           ),*/
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(
-              Icons.shopping_cart,
-              size: 22,
+            child: IconButton(
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddToCartPage()),
+                  );
+                },
+                icon: Icon(Icons.shopping_cart)
             ),
           ),
           //Icon(Icons.more_vert),

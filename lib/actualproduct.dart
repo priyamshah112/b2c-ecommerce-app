@@ -41,6 +41,9 @@ class _ActualProductPageState extends State<ActualProductPage> {
   var price;
   var stock_availability;
   var currency;
+  var sale=0;//0 means no sale(default), 1 means sale
+  var saleprice;
+  var salepercent;
 
   int quantity = 0;
   var _loading=true;
@@ -92,6 +95,14 @@ class _ActualProductPageState extends State<ActualProductPage> {
           currency=country_info[i][2];
           price=double.parse(country_info[i][4]);
           stock_availability = country_info[i][5];
+          if(country_info[i][6].length!=0){
+            sale=1;
+            saleprice=double.parse(country_info[i][6][1]);
+            print("saleprice="+saleprice.toString());
+            salepercent=(price-saleprice)/price*100;
+            salepercent = num.parse(salepercent.toStringAsFixed(0));
+            print("salepercent="+salepercent.toString());
+          }
           // stock_availability="0";
           /*if(country_info[i][5]=="0") {
             stock_availability = "Out of stock";
@@ -140,7 +151,15 @@ class _ActualProductPageState extends State<ActualProductPage> {
           //Icon(Icons.search),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.shopping_cart),
+            child: IconButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddToCartPage()),
+                );
+              },
+              icon: Icon(Icons.shopping_cart)
+            ),
           ),
           //Icon(Icons.more_vert),
         ],
@@ -193,7 +212,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
               ),
             ),
             SizedBox(height: 5,),
-            Row(
+            (sale==0)?Row(
               children: <Widget>[
                 Text(
                   price.toString(),
@@ -211,6 +230,56 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   ),
                 ),
               ],
+            ):Row(
+              children: [
+                Text(
+                  "Price: ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  saleprice.toString()+" "+currency+" ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[600]
+                  ),
+                ),
+                Text(
+                  price.toString()+" "+currency,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                    fontSize: 16,
+                    decorationThickness: 2,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            (sale==0)?Container():Padding(
+              padding: const EdgeInsets.only(top:8.0),
+              child: Container(
+                decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.green[500].withOpacity(0.9),
+                ),
+                alignment: Alignment.topLeft,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      salepercent.toString()+'% Discount',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 15,),
             Container(
@@ -681,7 +750,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 child: RaisedButton(
                   disabledColor: Colors.blueGrey,
                   onPressed: (stock_availability=="0")?null:(_addedToCart==true)?null:() {
-                    int addToCart(int productId, int quantity, double price, var product_name){
+                    int addToCart(int productId, int quantity, double price, var product_name, var sale, var oldprice){
                       bool flag = false;
                       for(int i=0;i<GlobalVariables.order_list.length;i++) {
                         if (productId == GlobalVariables.order_list[i][0]) {
@@ -695,13 +764,20 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       }
                       else{
                         //adding to cart
-                        var temp = [productId, quantity, price, quantity*price, product_name, images[0]];
+                        var temp = [productId, quantity, price, quantity*price, product_name, images[0], sale, oldprice];
                         GlobalVariables.order_list.add(temp);
                         _addedToCart=true;
                         return 0;
                       }
                     }
-                    int result=addToCart(widget.productId, quantity, price, product_name);
+                    int result;
+                    print("sale="+sale.toString());
+                    if(sale==0){
+                      result=addToCart(widget.productId, quantity, price, product_name, sale, price);
+                    }
+                    else{
+                      result=addToCart(widget.productId, quantity, saleprice, product_name, sale, price);
+                    }
                     _addedToCart=true;
                     print(GlobalVariables.order_list);
                     print("result="+result.toString());
