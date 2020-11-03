@@ -18,7 +18,7 @@ class _CarouselState extends State<Carousel> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _animateSlider());
-    print("haramchor");
+    // print("haramchor");
     print(widget.images);
     for(int i=0;i<widget.images.length;i++){
       _list.add(
@@ -39,9 +39,9 @@ class _CarouselState extends State<Carousel> with SingleTickerProviderStateMixin
         nextPage = 0;
       }
 
-      _controller
+      /*_controller
           .animateToPage(nextPage, duration: Duration(seconds: 1), curve: Curves.linear)
-          .then((_) => _animateSlider());
+          .then((_) => _animateSlider());*/
     });
   }
 

@@ -91,12 +91,14 @@ class _ActualProductPageState extends State<ActualProductPage> {
         if(int.parse(country_info[i][1])==GlobalVariables.countryId){
           currency=country_info[i][2];
           price=double.parse(country_info[i][4]);
-          if(country_info[i][5]=="0") {
+          stock_availability = country_info[i][5];
+          // stock_availability="0";
+          /*if(country_info[i][5]=="0") {
             stock_availability = "Out of stock";
           }
           else{
             stock_availability = "In stock";
-          }
+          }*/
         }
       }
       print(price);
@@ -157,6 +159,31 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   width: 300,
                   child: Carousel(images: images),
                 ),
+              ],
+            ),
+            (stock_availability=="1")?Container():
+            Column(
+              children: [
+                Center(
+                  child: Container(
+                    decoration: new BoxDecoration(
+                      color: Colors.red[300].withOpacity(0.40),
+                    ),
+                    height: 25,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Out of Stock',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 16,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height:10),
               ],
             ),
             Text(
@@ -653,7 +680,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 tag: Text("addtocart"),
                 child: RaisedButton(
                   disabledColor: Colors.blueGrey,
-                  onPressed: (_addedToCart==true)?null:() {
+                  onPressed: (stock_availability=="0")?null:(_addedToCart==true)?null:() {
                     int addToCart(int productId, int quantity, double price, var product_name){
                       bool flag = false;
                       for(int i=0;i<GlobalVariables.order_list.length;i++) {
