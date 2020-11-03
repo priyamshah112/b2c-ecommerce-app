@@ -1,6 +1,7 @@
 import 'package:building_materials_app/addtocart.dart';
 import 'package:building_materials_app/home.dart';
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart';
 
 class HomeApp extends StatefulWidget {
   @override
@@ -39,10 +40,21 @@ class _HomeAppState extends State<HomeApp> {
               title: Text("Home"),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_cart,
-                // FontAwesomeIcons.map,
-                size: 25.0,
+              icon: Badge(
+                //position: BadgePosition.topEnd(top: 10, end: 10),
+                showBadge: true,
+                badgeColor: Colors.red[500],
+                badgeContent: Text(
+                    '4',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                child: Icon(
+                  Icons.shopping_cart,
+                  // FontAwesomeIcons.map,
+                  size: 25.0,
+                ),
               ),
               // title: SizedBox.shrink(),
               title: Text("Cart"),

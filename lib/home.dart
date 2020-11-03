@@ -76,20 +76,23 @@ class _HomePageState extends State<HomePage> {
         ),
         //centerTitle: true,
         actions: [
-          GestureDetector(
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-            },
-            child: Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 22,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
+              },
+              child: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 22,
+              ),
             ),
           ),
-          Padding(
+          /*Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: GestureDetector(
               onTap: (){
@@ -104,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                 size: 22,
               ),
             ),
-          ),
+          ),*/
           //Icon(Icons.more_vert),
         ],
         backgroundColor: Colors.black87,
@@ -200,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                           height: MediaQuery.of(context).size.height*0.30,
                           width: MediaQuery.of(context).size.width,
                           child: Card(
-                            color: Colors.blueAccent,
+                            //color: Colors.blueAccent,
                             child: card,
                           ),
                         ),
@@ -346,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                                               style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.green[600]
+                                                  color: Colors.green[600],
                                               ),
                                             ),
                                           ],

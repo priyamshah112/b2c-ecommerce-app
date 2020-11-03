@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:building_materials_app/globalvars.dart';
 import 'package:building_materials_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+import 'package:http/http.dart' as http;
 
 class AddToCartPage extends StatefulWidget {
   @override
@@ -248,7 +251,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    total_price.toString(),
+                    total_price.toString()+" "+GlobalVariables.currency,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -261,7 +264,31 @@ class _AddToCartPageState extends State<AddToCartPage> {
               padding: const EdgeInsets.only(top: 10.0),
               child: RaisedButton(
                 onPressed: () {
-                  FlutterOpenWhatsapp.sendSingleMessage("917738562184", "Hello");
+                  Future<void> addOrder() async{
+
+                    var order_products=[];
+                    for(int x=0;x<GlobalVariables.order_list.length;x++){
+                      var this_product = [];
+                      this_product.add(GlobalVariables.order_list[x][0]);
+                      this_product.add(GlobalVariables.order_list[x][1]);
+                      this_product.add(GlobalVariables.order_list[x][2]);
+                      order_products.add(this_product);
+                    }
+
+                    var data = [GlobalVariables.countryId, total_price, order_products];
+                    final response = await http.post(
+                        "http://huzefam.sg-host.com/addOrder.php",
+                        body: {
+                          "data": json.encode(data),
+                        });
+                    // print(response.body);
+                    var decodedResponse = json.decode(response.body);
+                    print(decodedResponse);
+                    if(decodedResponse!="problem"){
+                      FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "Order33 ");
+                    }
+                  }
+
                 },
                 color: Colors.green[400],
                 textColor: Colors.white,

@@ -748,7 +748,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
               child: Hero(
                 tag: Text("addtocart"),
                 child: RaisedButton(
-                  disabledColor: Colors.blueGrey,
+                  disabledColor: Colors.grey,
                   onPressed: (stock_availability=="0")?null:(_addedToCart==true)?null:() {
                     int addToCart(int productId, int quantity, double price, var product_name, var sale, var oldprice){
                       bool flag = false;
@@ -772,6 +772,9 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     }
                     int result;
                     print("sale="+sale.toString());
+                    if(quantity == 0){
+                      quantity=1;
+                    }
                     if(sale==0){
                       result=addToCart(widget.productId, quantity, price, product_name, sale, price);
                     }
@@ -805,6 +808,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     children: <Widget>[
                       Icon(
                         Icons.check_circle,
+                        color: Colors.white,
                         size: 20,
                       ),
                       SizedBox(width: 10,),
@@ -812,6 +816,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                         'Added to Cart',
                         style: TextStyle(
                           fontSize: 15,
+                          color: Colors.white,
                           letterSpacing: 0.8,
                         ),
                       ),
