@@ -293,18 +293,32 @@ class _AddToCartPageState extends State<AddToCartPage> {
                         "http://huzefam.sg-host.com/addOrder.php",
                         body: {
                           "data": json.encode(data),
-                        });
+                        }
+                    );
                     //print(response.body);
                     var decodedResponse = json.decode(response.body);
                     print(decodedResponse);
                     if(decodedResponse!="problem"){
+                      print("inside");
+                      var whatsapp_msg="";
+                      for(int x=0;x<GlobalVariables.order_list.length;x++){
+                        whatsapp_msg=whatsapp_msg+(x+1).toString()+". "+GlobalVariables.order_list[x][4].toString()+"("+decodedResponse[x].toString()+"): quantity="+GlobalVariables.order_list[x][1].toString()+" price/item="+GlobalVariables.order_list[x][2].toString()+GlobalVariables.currency+" total="+GlobalVariables.order_list[x][3].toString()+GlobalVariables.currency+"\n";
+                      }
+                      whatsapp_msg=whatsapp_msg+"\nTOTAL= "+total_price.toString()+" "+GlobalVariables.currency;
+                      print(whatsapp_msg);
                       setState(() {
                         //reseting all variables
                         GlobalVariables.order_list.clear();
+                        GlobalVariables.total_cart_items=0;
                         total_price=0;
+                        if(widget.fromHomePage==true){
+                          widget.cartbadgecallback();
+                        }
                         _checkingout=false;
                       });
-                      FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "Order33 ");
+                      print(GlobalVariables.order_list.length);
+
+                      FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, whatsapp_msg);
                     }
                   }
                   setState(() {
@@ -314,7 +328,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
                 },
                 color: Colors.green[400],
                 textColor: Colors.white,
-                child: (_checkingout==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Text(
+                child: (_checkingout==true)?SizedBox(height:20,width:20,child: CircularProgressIndicator(strokeWidth:1,valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),)):Text(
                   'Checkout',
                   style: TextStyle(
                     fontSize: 18,
