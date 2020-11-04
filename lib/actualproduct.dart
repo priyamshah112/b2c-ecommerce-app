@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:badges/badges.dart';
 import 'package:building_materials_app/addtocart.dart';
 import 'package:building_materials_app/globalvars.dart';
 import 'package:building_materials_app/image_carousel_dots.dart';
@@ -155,10 +156,29 @@ class _ActualProductPageState extends State<ActualProductPage> {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddToCartPage()),
-                );
+                  MaterialPageRoute(builder: (context) => AddToCartPage(fromHomePage: false,)),
+                ).then((value) {
+                  setState(() {
+
+                  });
+                });
               },
-              icon: Icon(Icons.shopping_cart)
+              icon: Badge(
+                //position: BadgePosition.topEnd(top: 10, end: 10),
+                showBadge: (GlobalVariables.total_cart_items==0)?false:true,
+                badgeColor: Colors.red[500],
+                badgeContent: Text(
+                  GlobalVariables.total_cart_items.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                child: Icon(
+                  Icons.shopping_cart,
+                  // FontAwesomeIcons.map,
+                  size: 25.0,
+                ),
+              ),
             ),
           ),
           //Icon(Icons.more_vert),
@@ -306,6 +326,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                             void quantityChange(int productId, int new_quantity){
                               for(int i=0;i<GlobalVariables.order_list.length;i++) {
                                 if (productId == GlobalVariables.order_list[i][0]) {
+                                  GlobalVariables.total_cart_items-=1;
                                   GlobalVariables.order_list[i][1]=new_quantity;
                                   GlobalVariables.order_list[i][3]=new_quantity * GlobalVariables.order_list[i][2];
                                   break;
@@ -313,6 +334,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                               }
                             }
                             quantityChange(widget.productId, quantity);
+
                             if(quantity==0){
                               GlobalVariables.order_list.removeWhere((product) => product[0] == widget.productId);
                               _addedToCart=false;
@@ -356,6 +378,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                           void quantityChange(int productId, int new_quantity){
                             for(int i=0;i<GlobalVariables.order_list.length;i++) {
                               if (productId == GlobalVariables.order_list[i][0]) {
+                                GlobalVariables.total_cart_items+=1;//only do this if it is added in the order_list
                                 GlobalVariables.order_list[i][1]=new_quantity;
                                 GlobalVariables.order_list[i][3]=new_quantity * GlobalVariables.order_list[i][2];
                                 break;
@@ -782,6 +805,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       result=addToCart(widget.productId, quantity, saleprice, product_name, sale, price);
                     }
                     _addedToCart=true;
+                    GlobalVariables.total_cart_items+=quantity;
                     print(GlobalVariables.order_list);
                     print("result="+result.toString());
                     setState(() {
@@ -836,8 +860,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       onPressed: () {
                         Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AddToCartPage()),
-                        );
+                        MaterialPageRoute(builder: (context) => AddToCartPage(fromHomePage: false,)),
+                        ).then((value) {
+                          setState(() {
+
+                          });
+                        });
                       },
                       color: Colors.red[300],
                       textColor: Colors.white,

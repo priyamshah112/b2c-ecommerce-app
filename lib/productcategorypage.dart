@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:badges/badges.dart';
 import 'package:building_materials_app/actualproduct.dart';
 import 'package:building_materials_app/addtocart.dart';
 import 'package:building_materials_app/globalvars.dart';
@@ -93,10 +94,29 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                 onPressed: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddToCartPage()),
-                  );
+                    MaterialPageRoute(builder: (context) => AddToCartPage(fromHomePage: false,)),
+                  ).then((value) {
+                    setState(() {
+
+                    });
+                  });
                 },
-                icon: Icon(Icons.shopping_cart)
+                icon: Badge(
+                  //position: BadgePosition.topEnd(top: 10, end: 10),
+                  showBadge: (GlobalVariables.total_cart_items==0)?false:true,
+                  badgeColor: Colors.red[500],
+                  badgeContent: Text(
+                    GlobalVariables.total_cart_items.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.shopping_cart,
+                    // FontAwesomeIcons.map,
+                    size: 25.0,
+                  ),
+                ),
             ),
           ),
           //Icon(Icons.more_vert),
@@ -179,7 +199,11 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
-                                            );
+                                            ).then((value) {
+                                              setState(() {
+
+                                              });
+                                            });
                                           },
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment
@@ -335,7 +359,11 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
-                          );
+                          ).then((value) {
+                            setState(() {
+
+                            });
+                          });
                         },
                         child: Card(
                           child: Padding(

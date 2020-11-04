@@ -1,4 +1,5 @@
 import 'package:building_materials_app/addtocart.dart';
+import 'package:building_materials_app/globalvars.dart';
 import 'package:building_materials_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
@@ -14,8 +15,17 @@ class _HomeAppState extends State<HomeApp> {
 
   Widget callpage(int currentIndex){
     switch(currentIndex){
-      case 0: return HomePage();
-      case 1: return AddToCartPage();
+      case 0: return HomePage(
+        cartbadgecallback: () {
+          setState(() {});
+        },
+      );
+      case 1: return AddToCartPage(
+        cartbadgecallback: () {
+          setState(() {});
+        },
+        fromHomePage: true,
+      );
     }
   }
 
@@ -42,10 +52,10 @@ class _HomeAppState extends State<HomeApp> {
             BottomNavigationBarItem(
               icon: Badge(
                 //position: BadgePosition.topEnd(top: 10, end: 10),
-                showBadge: true,
+                showBadge: (GlobalVariables.total_cart_items==0)?false:true,
                 badgeColor: Colors.red[500],
                 badgeContent: Text(
-                    '4',
+                  GlobalVariables.total_cart_items.toString(),
                   style: TextStyle(
                     color: Colors.white,
                   ),

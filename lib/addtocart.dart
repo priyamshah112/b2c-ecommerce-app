@@ -7,6 +7,10 @@ import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:http/http.dart' as http;
 
 class AddToCartPage extends StatefulWidget {
+  VoidCallback cartbadgecallback;
+  bool fromHomePage;
+  AddToCartPage({Key key, this.cartbadgecallback, this.fromHomePage}): super(key: key);
+
   @override
   _AddToCartPageState createState() => _AddToCartPageState();
 }
@@ -15,6 +19,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
 
   var _loading=true;
   double total_price=0;
+  var _checkingout=false;
 
   @override
   void initState() {
@@ -156,6 +161,10 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                               var index = GlobalVariables.order_list.indexOf(i);
                                               if(GlobalVariables.order_list[index][1]!=0){
                                                 GlobalVariables.order_list[index][1]-=1;
+                                                GlobalVariables.total_cart_items-=1;
+                                                if(widget.fromHomePage==true){
+                                                  widget.cartbadgecallback();
+                                                }
                                                 total_price-=GlobalVariables.order_list[index][3];
                                                 GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
                                                 total_price+=GlobalVariables.order_list[index][3];
@@ -199,6 +208,10 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                             setState(() {
                                               var index = GlobalVariables.order_list.indexOf(i);
                                               GlobalVariables.order_list[index][1]+=1;
+                                              GlobalVariables.total_cart_items+=1;
+                                              if(widget.fromHomePage==true){
+                                                widget.cartbadgecallback();
+                                              }
                                               total_price-=GlobalVariables.order_list[index][3];
                                               GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
                                               total_price+=GlobalVariables.order_list[index][3];
@@ -263,7 +276,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
             trailing: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: RaisedButton(
-                onPressed: () {
+                onPressed: (GlobalVariables.order_list.length==0)?null:() {
                   Future<void> addOrder() async{
 
                     var order_products=[];
@@ -281,18 +294,27 @@ class _AddToCartPageState extends State<AddToCartPage> {
                         body: {
                           "data": json.encode(data),
                         });
-                    // print(response.body);
+                    //print(response.body);
                     var decodedResponse = json.decode(response.body);
                     print(decodedResponse);
                     if(decodedResponse!="problem"){
+                      setState(() {
+                        //reseting all variables
+                        GlobalVariables.order_list.clear();
+                        total_price=0;
+                        _checkingout=false;
+                      });
                       FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "Order33 ");
                     }
                   }
-
+                  setState(() {
+                    _checkingout=true;
+                  });
+                  addOrder();
                 },
                 color: Colors.green[400],
                 textColor: Colors.white,
-                child: Text(
+                child: (_checkingout==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Text(
                   'Checkout',
                   style: TextStyle(
                     fontSize: 18,

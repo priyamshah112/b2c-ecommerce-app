@@ -14,6 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
+  VoidCallback cartbadgecallback;
+  HomePage({Key key, this.cartbadgecallback}): super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -197,7 +200,9 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CategoryPage(categoryId: (categoryId+1),categoryName: categoryName)),
-                          );
+                          ).then((value) {
+                            widget.cartbadgecallback();
+                          });
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height*0.30,
@@ -288,7 +293,9 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
-                                );
+                                ).then((value) {
+                                  widget.cartbadgecallback();
+                                });
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment
