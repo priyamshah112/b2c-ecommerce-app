@@ -1,12 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+
 class GetLocationPage extends StatefulWidget {
   @override
   _GetLocationPageState createState() => _GetLocationPageState();
 }
 
 class _GetLocationPageState extends State<GetLocationPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future<void> getCountryName() async {
+      Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      debugPrint('location: ${position.latitude}');
+      final coordinates = new Coordinates(position.latitude, position.longitude);
+      var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      var first = addresses.first;
+      print(first.countryName); // this will return country name
+    }
+    getCountryName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
