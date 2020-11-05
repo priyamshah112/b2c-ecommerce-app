@@ -1,4 +1,5 @@
 import 'package:building_materials_app/bottomnav.dart';
+import 'package:building_materials_app/getlocation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeApp(),
+      //home: HomeApp(),
+      home: GetLocationPage(),
     );
   }
 }
