@@ -20,6 +20,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
   var _loading=true;
   double total_price=0;
   var _checkingout=false;
+  var _checkoutConfirm=false;
 
   @override
   void initState() {
@@ -38,6 +39,37 @@ class _AddToCartPageState extends State<AddToCartPage> {
     }
     calculate_total();
 
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Center(child: Text("Checkout"),),
+          content: new Text("Would you like to place your order?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cancel"),
+              onPressed: () {
+                _checkoutConfirm=false;
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Confirm"),
+              onPressed: () {
+                _checkoutConfirm=true;
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -337,10 +369,14 @@ class _AddToCartPageState extends State<AddToCartPage> {
                       FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, whatsapp_msg);
                     }
                   }
-                  setState(() {
-                    _checkingout=true;
-                  });
-                  addOrder();
+                  //_showDialog();
+                  if(_checkoutConfirm==true){
+                    setState(() {
+                      _checkingout=true;
+                    });
+                    addOrder();
+                  }
+                  _checkoutConfirm=false;
                 },
                 color: Colors.green[400],
                 textColor: Colors.white,
