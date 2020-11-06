@@ -112,7 +112,7 @@ class _CategoryPageState extends State<CategoryPage> {
       body: (_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
         child: Container(
-          height: 700,
+          height: double.infinity,
           width: double.infinity,
           child: ListView(
             scrollDirection: Axis.vertical,
@@ -303,7 +303,6 @@ class _CategoryPageState extends State<CategoryPage> {
                                   ),
                                 ),
                               ],
-
                             ),
                           ),
                         ],
