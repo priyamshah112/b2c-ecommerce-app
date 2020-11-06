@@ -84,6 +84,9 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
         ),
         title: Text(
           widget.productCategoryName,
+          style: TextStyle(
+            fontSize: 18,
+          ),
         ),
         centerTitle: true,
         actions: [

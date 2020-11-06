@@ -49,18 +49,18 @@ class _AddToCartPageState extends State<AddToCartPage> {
 //          color: Colors.black87,
 //          size: 22,
 //        ),
-//        title: Text(
-//          'Home',
-//          style: TextStyle(
-//            color: Colors.red[300],
-//            fontSize: 18,
-//          ),
-//        ),
-        //centerTitle: true,
+        title: Text(
+          'Shopping Cart',
+          style: TextStyle(
+            color: Colors.black87,
+            fontSize: 18,
+          ),
+        ),
+        centerTitle: true,
         backgroundColor: Colors.white,
       ),
     
-      body: (GlobalVariables.order_list.length==0)?Center(child: Text("No items in the cart.")):Container(
+      body: (GlobalVariables.order_list.length==0)?Center(child: Text("No items in the cart.", style: TextStyle(fontSize: 17),)):Container(
         decoration: new BoxDecoration(color: Colors.grey[100]),
         child: Padding(
           padding: EdgeInsets.fromLTRB(20,20,20,0),
@@ -247,11 +247,11 @@ class _AddToCartPageState extends State<AddToCartPage> {
         ),
       ),
       bottomNavigationBar: Card(
-        child: SizedBox(
-          height: 80,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
           child: ListTile(
             leading: Padding(
-              padding: EdgeInsets.only(left: 10, top: 10.0),
+              padding: EdgeInsets.only(left: 0, top: 10.0),
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

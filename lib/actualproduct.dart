@@ -193,10 +193,17 @@ class _ActualProductPageState extends State<ActualProductPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  height: 300,
-                  width: 300,
-                  child: Carousel(images: images),
+                GestureDetector(
+                  child: Container(
+                    height: 300,
+                    width: 300,
+                    child: Carousel(images: images),
+                  ),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return ImageScreen();
+                    }));
+                  },
                 ),
               ],
             ),
@@ -892,6 +899,27 @@ class _ActualProductPageState extends State<ActualProductPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ImageScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: Image.network(
+              images,
+            ),
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }
