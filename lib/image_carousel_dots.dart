@@ -84,6 +84,7 @@ class SliderBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(10),
-        child: child);
+        child: child
+    );
   }
 }

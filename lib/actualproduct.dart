@@ -7,6 +7,7 @@ import 'package:building_materials_app/image_carousel_dots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:carousel_images/carousel_images.dart';
 
 class ActualProductPage extends StatefulWidget {
   int productId;
@@ -201,7 +202,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   ),
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return ImageScreen();
+                      return ImageScreen(images: images);
                     }));
                   },
                 ),
@@ -904,18 +905,42 @@ class _ActualProductPageState extends State<ActualProductPage> {
   }
 }
 
-class ImageScreen extends StatelessWidget {
+class ImageScreen extends StatefulWidget {
+  var images;
+  ImageScreen({Key key, this.images}): super(key: key);
+
+  @override
+  _ImageScreenState createState() => _ImageScreenState();
+}
+
+class _ImageScreenState extends State<ImageScreen> {
+  var templist=[];
+  @override
+  void initState() {
+    super.initState();
+
+    for(int i=0;i<widget.images.length;i++){
+      templist.add('http://huzefam.sg-host.com/'+widget.images[i]);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: GestureDetector(
         child: Center(
-          child: Hero(
-            tag: 'imageHero',
-            child: Image.network(
-              images,
-            ),
-          ),
+          child: CarouselImages(
+            scaleFactor: 0.6,
+            listImages: templist,
+            height: 300.0,
+            borderRadius: 30.0,
+            cachedNetworkImage: true,
+            verticalAlignment: Alignment.topCenter,
+            onTap: (index){
+              print('Tapped on page $index');
+            },
+          )
         ),
         onTap: () {
           Navigator.pop(context);
