@@ -1,15 +1,41 @@
+import 'dart:convert';
+
+import 'package:building_materials_app/actualproduct.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 class SearchPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+  var product = [];
+  TextEditingController searchController = new TextEditingController();
+
+  Future<void> search_info() async {
+    print(searchController.text);
+    final response = await http.post(
+        "http://huzefam.sg-host.com/searchSys.php",
+        body: {
+          "searchString":searchController.text,
+        }
+    );
+    var decodedResponse = json.decode(response.body);
+    print(decodedResponse);
+    print(decodedResponse['product_info']);
+
+    product=decodedResponse['product_info'];
+
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0, 60.0, 10.0, 0.0),
+        padding: EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
         child: Column(
           children: <Widget>[
             Row(
@@ -27,19 +53,24 @@ class _SearchPageState extends State<SearchPage> {
                 Container(
                   width: 260,
                   child: TextField(
-                    //controller: myController,
-//                onChanged: (text) {
-//                  print("Text $text");
-//                },
+                    controller: searchController,
+                    onChanged: (text) {
+                      search_info(); 
+                    },
                     decoration: InputDecoration(
                       //border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.grey[100],
                       hintText: 'Search',
                       contentPadding: EdgeInsets.only(left: 20, top: 2),
-                      suffixIcon: Icon(
+                      suffixIcon: GestureDetector(
+                        onTap: (){
+                          search_info();
+                        },
+                        child: Icon(
                         Icons.search,
                         color: Colors.black87,
+                        ),
                       ),
                       hintStyle: TextStyle(
                         fontSize: 17.0,
@@ -68,18 +99,29 @@ class _SearchPageState extends State<SearchPage> {
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: SizedBox(
-                height: 600,
+                height: MediaQuery.of(context).size.height,
                 child: ListView(
                   scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      ListTile(
-//                        leading: Icon(
-//                          Icons.location_on,
-//                        ),
-                        title: Text('Blue Water Stopper Plug(Price per 100pc'),
-                        subtitle: Text("yo"),
-                      ),
-                    ],
+                    children: product.map((i){
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: ListTile(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                            );
+                          },
+                          leading: Image.network(
+                            'http://huzefam.sg-host.com/' + i[2],
+                          ),
+                          title: Text(
+                            i[1],
+                          ),
+                          //subtitle: Text("yo"),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
               ),

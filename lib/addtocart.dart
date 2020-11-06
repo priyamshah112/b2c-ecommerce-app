@@ -236,7 +236,23 @@ class _AddToCartPageState extends State<AddToCartPage> {
                             ],
                           ),
                         ),
-                        trailing: Icon(Icons.delete),
+                        trailing: GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              var index = GlobalVariables.order_list.indexOf(i);
+                              GlobalVariables.total_cart_items-=GlobalVariables.order_list[index][1];
+                              if(widget.fromHomePage==true){
+                                widget.cartbadgecallback();
+                              }
+                              total_price-=GlobalVariables.order_list[index][3];
+                              GlobalVariables.order_list.removeWhere((product) => product[0] == i[0]);
+                              print(GlobalVariables.order_list);
+                            });
+                          },
+                          child: Icon(
+                          Icons.delete,
+                          ),
+                        ),
                       ),
                     ),
                   ),
