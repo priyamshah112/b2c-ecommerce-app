@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetLocationPage extends StatefulWidget {
   @override
@@ -195,6 +196,13 @@ class _GetLocationPageState extends State<GetLocationPage> {
                   print(GlobalVariables.countryId);
                   print(GlobalVariables.currency);
                   print(GlobalVariables.contact_no);
+
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('_locationDone', true);
+                  await prefs.setInt('countryId', GlobalVariables.countryId);
+                  await prefs.setString('currency', GlobalVariables.currency);
+                  await prefs.setString('contact_no', GlobalVariables.contact_no);
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => HomeApp()),
