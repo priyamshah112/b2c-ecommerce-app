@@ -41,37 +41,6 @@ class _AddToCartPageState extends State<AddToCartPage> {
 
   }
 
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Center(child: Text("Checkout"),),
-          content: new Text("Would you like to place your order?"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Cancel"),
-              onPressed: () {
-                _checkoutConfirm=false;
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Confirm"),
-              onPressed: () {
-                _checkoutConfirm=true;
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -324,7 +293,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
             trailing: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: RaisedButton(
-                onPressed: (GlobalVariables.order_list.length==0)?null:() {
+                onPressed: (GlobalVariables.order_list.length==0)?null:()async {
                   Future<void> addOrder() async{
 
                     var order_products=[];
@@ -369,8 +338,36 @@ class _AddToCartPageState extends State<AddToCartPage> {
                       FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, whatsapp_msg);
                     }
                   }
-                  //_showDialog();
+                  bool reply = await showDialog(
+                    context: this.context,
+                    builder: (BuildContext context) {
+                      // return object of type Dialog
+                      return AlertDialog(
+                        title: new Center(child: Text("Checkout"),),
+                        content: new Text("Would you like to place your order?"),
+                        actions: <Widget>[
+                          // usually buttons at the bottom of the dialog
+                          new FlatButton(
+                            child: new Text("Cancel"),
+                            onPressed: () {
+                              _checkoutConfirm=false;
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          new FlatButton(
+                            child: new Text("Confirm"),
+                            onPressed: () {
+                              _checkoutConfirm=true;
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  print(_checkoutConfirm);
                   if(_checkoutConfirm==true){
+                    print("inside");
                     setState(() {
                       _checkingout=true;
                     });
