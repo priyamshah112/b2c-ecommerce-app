@@ -267,7 +267,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: ListTile(
-            leading: Padding(
+            /*leading: Padding(
               padding: EdgeInsets.only(left: 0, top: 10.0),
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.start,
@@ -288,6 +288,26 @@ class _AddToCartPageState extends State<AddToCartPage> {
                     ),
                   ),
                 ],
+              ),
+            ),*/
+            title: Padding(
+              padding: const EdgeInsets.only(left:0, top: 0.0),
+              child: Text(
+                'Total Price',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                total_price.toString()+" "+GlobalVariables.currency,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                ),
               ),
             ),
             trailing: Padding(

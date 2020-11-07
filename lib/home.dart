@@ -146,14 +146,12 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               DrawerHeader(
                 child: Center(
-                  child: Expanded(
-                    child: Text(
-                      'AY Building Materials',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        letterSpacing: 1.0,
-                      ),
+                  child: Text(
+                    'AY Building Materials',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      letterSpacing: 1.0,
                     ),
                   ),
                 ),

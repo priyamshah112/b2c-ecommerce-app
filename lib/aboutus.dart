@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+import 'package:url_launcher/url_launcher.dart';
 class AboutUsPage extends StatefulWidget {
   @override
   _AboutUsPageState createState() => _AboutUsPageState();
@@ -77,7 +79,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             ),
             SizedBox(height: 20,),
             Container(
-              child: Text('AsgarAli Yousuf Trading Co. (AY Building Materials) is the UAE subsidiary of Macoma Group. The company has a wee established presence in the region and has now overseen three generations in business with a proven track record for excellent customer satisfaction. Our aim is to distribute the highest quality of Sanitaryware, Building Materials, and Fastener products at the lowest price.',
+              child: Text('AsgarAli Yousuf Trading Co. (AY Building Materials) is the UAE subsidiary of Macoma Group. The company has a well-established presence in the region and has now overseen three generations in business with a proven track record for excellent customer satisfaction. Our aim is to distribute the highest quality of Sanitaryware, Building Materials, and Fastener products at the lowest price.',
                 style: TextStyle(
                 fontSize: 14,
                 ),
@@ -94,7 +96,31 @@ class _AboutUsPageState extends State<AboutUsPage> {
             ),
             SizedBox(height: 25),
             Container(
-              child: Text('Know more about us at: www.macoma.co'),
+              child: Row(
+                children: [
+                  Text('Know more about us at:'),
+                  GestureDetector(
+                    onTap: (){
+                      _launchURL() async {
+                        const url = 'http://www.macoma.co';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      }
+                      _launchURL();
+                    },
+                    child: Text(
+                      " www.macoma.co",
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        //decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 25,),
             Text(
@@ -105,38 +131,46 @@ class _AboutUsPageState extends State<AboutUsPage> {
               ),
             ),
             SizedBox(height: 10,),
-            Row(
-              children: <Widget>[
-                Image.asset(
-                    'assets/images/whatsapplogo.png',
-                  height: 30,
-                  width: 30,
-                ),
-                SizedBox(width: 6,),
-                Text(
-                    'Whatsapp',
-                  style: TextStyle(
-                    fontSize: 16,
+            GestureDetector(
+              onTap: (){
+                FlutterOpenWhatsapp.sendSingleMessage("971508993201", "Hello team AY building Materials");
+              },
+              child: Row(
+                children: <Widget>[
+                  Image.asset(
+                      'assets/images/whatsapplogo.png',
+                    height: 30,
+                    width: 30,
                   ),
-                ),
-              ],
+                  SizedBox(width: 6,),
+                  Text(
+                      'Whatsapp',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 10,),
-            Row(
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/call.png',
-                  height: 30,
-                  width: 30,
-                ),
-                SizedBox(width: 6,),
-                Text(
-                  'Call',
-                  style: TextStyle(
-                    fontSize: 16,
+            GestureDetector(
+              onTap: () => launch("tel://971508993201"),
+              child: Row(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/call.png',
+                    height: 30,
+                    width: 30,
                   ),
-                ),
-              ],
+                  SizedBox(width: 6,),
+                  Text(
+                    'Call',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
