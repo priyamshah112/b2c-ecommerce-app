@@ -8,6 +8,7 @@ import 'package:building_materials_app/globalvars.dart';
 import 'package:building_materials_app/productcategorypage.dart';
 import 'package:building_materials_app/searchpage.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -181,445 +182,450 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(20,20,20,0),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            Text(
-              'SHOP BY CATEGORY',
-              style: TextStyle(
-                letterSpacing: 0.8,
-                fontSize: 18,
-                color: Colors.grey[800],
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+          content: Text('Tap back again to leave'),
+        ),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(20,20,20,0),
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              Text(
+                'SHOP BY CATEGORY',
+                style: TextStyle(
+                  letterSpacing: 0.8,
+                  fontSize: 18,
+                  color: Colors.grey[800],
+                ),
               ),
-            ),
-            SizedBox(height:20),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                pauseAutoPlayOnTouch: true,
-                aspectRatio: 2.0,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
-              items: cardList.map((card){
-                var categoryId = cardList.indexOf(card);
-                var categoryName = categoryNameList[categoryId];
-                return Builder(
-                    builder:(BuildContext context){
-                      return InkWell(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => CategoryPage(categoryId: (categoryId+1),categoryName: categoryName)),
-                          ).then((value) {
-                            widget.cartbadgecallback();
-                          });
-                        },
-                        child: Container(
-                          height: MediaQuery.of(context).size.height*0.30,
-                          width: MediaQuery.of(context).size.width,
-                          child: Card(
-                            //color: Colors.blueAccent,
-                            child: card,
+              SizedBox(height:20),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 200.0,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  pauseAutoPlayOnTouch: true,
+                  aspectRatio: 2.0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: cardList.map((card){
+                  var categoryId = cardList.indexOf(card);
+                  var categoryName = categoryNameList[categoryId];
+                  return Builder(
+                      builder:(BuildContext context){
+                        return InkWell(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CategoryPage(categoryId: (categoryId+1),categoryName: categoryName)),
+                            ).then((value) {
+                              widget.cartbadgecallback();
+                            });
+                          },
+                          child: Container(
+                            height: MediaQuery.of(context).size.height*0.30,
+                            width: MediaQuery.of(context).size.width,
+                            child: Card(
+                              //color: Colors.blueAccent,
+                              child: card,
+                            ),
                           ),
-                        ),
-                      );
-                    }
-                );
-              }).toList(),
-            ),
-            SizedBox(height:10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: map<Widget>(cardList, (index, url) {
-                return Container(
-                  width: 7.0,
-                  height: 7.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentIndex == index ? Colors.black87 : Colors.grey,
-                  ),
-                );
-              }),
-            ),
-            SizedBox(height: 18,),
-            Text(
-              'STOCK CLEARANCE SALE',
-              style: TextStyle(
-                fontSize: 18,
-                letterSpacing: 0.8,
-                color: Colors.grey[800],
-              ),
-            ),
-            SizedBox(height: 20),
-            SizedBox(
-              height: 205,
-              width: double.infinity,
-              child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
-                scrollDirection: Axis.horizontal,
-                children: sale_list.map<Widget>((i){
-                  var innerprice;
-                  var stock_availability;
-                  var sale=0;//0 means no sale(default), 1 means sale
-                  var saleprice;
-                  var salepercent;
-                  print(i);
-                  for(int x=0; x<i[3].length;x++){
-                     // print(i[3][x]);
-                    if(GlobalVariables.countryId.toString()==i[3][x][1]){
-                      innerprice=double.parse(i[3][x][4]);
-                      // print("hii");
-                      stock_availability=i[3][x][5];
-                      if(i[3][x][6].length!=0){
-                        sale=1;
-                        saleprice=double.parse(i[3][x][6][1]);
-                        print("saleprice="+saleprice.toString());
-                        salepercent=(innerprice-saleprice)/innerprice*100;
-                        salepercent = num.parse(salepercent.toStringAsFixed(0));
-                        print(salepercent.toString());
+                        );
                       }
-                    }
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 200,
-                          width: 160,
-                          constraints: BoxConstraints(
-                              minWidth: 100, maxWidth: 200),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(
-                              color: Colors.grey[350],
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: FlatButton(
-                              padding: const EdgeInsets.all(0.0),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
-                                ).then((value) {
-                                  widget.cartbadgecallback();
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .center,
-                                crossAxisAlignment: CrossAxisAlignment
-                                    .center,
-                                children: <Widget>[
-                                  Image.network(
-                                    'http://huzefam.sg-host.com/'+i[2],
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                  SizedBox(height: 5,),
-                                  SizedBox(
-                                    width: 180,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Text(
-                                            i[1],
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 5,),
-                                  SizedBox(
-                                    width: 150,
-                                    child: Row(
-                                      children: <Widget>[
-                                        (sale==0)?Expanded(
-                                          child: Text(
-                                            innerprice.toString()+" "+GlobalVariables.currency,
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ):Row(
-                                          children: [
-                                            Text(
-                                              innerprice.toString(),
-                                              style: TextStyle(
-                                                color: Colors.grey,
-                                                decoration: TextDecoration.lineThrough,
-                                                fontSize: 16,
-                                                decorationThickness: 2,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Text(
-                                              " "+saleprice.toString()+" "+GlobalVariables.currency,
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.green[600],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        (sale==0)?Container():Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green[500],
-                            ),
-                            height: 20,
-                            width: 30,
-                            alignment: Alignment.topLeft,
-                            child: Center(
-                              child: Text(
-                                salepercent.toString()+'%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        (stock_availability=="1")?Container():Center(
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              color: Colors.red[300].withOpacity(0.40),
-                            ),
-                            height: 25,
-                            width: 160,
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Out of Stock',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 16,
-                                letterSpacing: 1.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   );
                 }).toList(),
               ),
-            ),
-            SizedBox(height: 25,),
-            Text(
-              'NEW ARRIVALS',
-              style: TextStyle(
-                fontSize: 18,
-                letterSpacing: 1.2,
-                color: Colors.grey[800],
+              SizedBox(height:10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: map<Widget>(cardList, (index, url) {
+                  return Container(
+                    width: 7.0,
+                    height: 7.0,
+                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndex == index ? Colors.black87 : Colors.grey,
+                    ),
+                  );
+                }),
               ),
-            ),
-            SizedBox(height: 20),
-            SizedBox(
-              height: 205,
-              width: double.infinity,
-              child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
-                scrollDirection: Axis.horizontal,
-                children: new_arrivals_list.map<Widget>((i){
-                  var innerprice;
-                  var stock_availability;
-                  var sale=0;//0 means no sale(default), 1 means sale
-                  var saleprice;
-                  var salepercent;
-                  print(i);
-                  for(int x=0; x<i[3].length;x++){
-                    // print(i[3][x]);
-                    if(GlobalVariables.countryId.toString()==i[3][x][1]){
-                      innerprice=double.parse(i[3][x][4]);
-                      // print("hii");
-                      stock_availability=i[3][x][5];
-                      if(i[3][x][6].length!=0){
-                        sale=1;
-                        saleprice=double.parse(i[3][x][6][1]);
-                        print("saleprice="+saleprice.toString());
-                        salepercent=(innerprice-saleprice)/innerprice*100;
-                        salepercent = num.parse(salepercent.toStringAsFixed(0));
-                        print(salepercent.toString());
+              SizedBox(height: 18,),
+              Text(
+                'STOCK CLEARANCE SALE',
+                style: TextStyle(
+                  fontSize: 18,
+                  letterSpacing: 0.8,
+                  color: Colors.grey[800],
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 205,
+                width: double.infinity,
+                child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: sale_list.map<Widget>((i){
+                    var innerprice;
+                    var stock_availability;
+                    var sale=0;//0 means no sale(default), 1 means sale
+                    var saleprice;
+                    var salepercent;
+                    print(i);
+                    for(int x=0; x<i[3].length;x++){
+                       // print(i[3][x]);
+                      if(GlobalVariables.countryId.toString()==i[3][x][1]){
+                        innerprice=double.parse(i[3][x][4]);
+                        // print("hii");
+                        stock_availability=i[3][x][5];
+                        if(i[3][x][6].length!=0){
+                          sale=1;
+                          saleprice=double.parse(i[3][x][6][1]);
+                          print("saleprice="+saleprice.toString());
+                          salepercent=(innerprice-saleprice)/innerprice*100;
+                          salepercent = num.parse(salepercent.toStringAsFixed(0));
+                          print(salepercent.toString());
+                        }
                       }
                     }
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 200,
-                          width: 160,
-                          constraints: BoxConstraints(
-                              minWidth: 100, maxWidth: 200),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(
-                              color: Colors.grey[350],
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 160,
+                            constraints: BoxConstraints(
+                                minWidth: 100, maxWidth: 200),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                color: Colors.grey[350],
+                              ),
                             ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: FlatButton(
-                              padding: const EdgeInsets.all(0.0),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
-                                ).then((value) {
-                                  widget.cartbadgecallback();
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .center,
-                                crossAxisAlignment: CrossAxisAlignment
-                                    .center,
-                                children: <Widget>[
-                                  Image.network(
-                                    'http://huzefam.sg-host.com/'+i[2],
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                  SizedBox(height: 5,),
-                                  SizedBox(
-                                    width: 180,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Text(
-                                            i[1],
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: FlatButton(
+                                padding: const EdgeInsets.all(0.0),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                                  ).then((value) {
+                                    widget.cartbadgecallback();
+                                  });
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .center,
+                                  crossAxisAlignment: CrossAxisAlignment
+                                      .center,
+                                  children: <Widget>[
+                                    Image.network(
+                                      'http://huzefam.sg-host.com/'+i[2],
+                                      height: 100,
+                                      width: 100,
                                     ),
-                                  ),
-                                  SizedBox(height: 5,),
-                                  SizedBox(
-                                    width: 150,
-                                    child: Row(
-                                      children: <Widget>[
-                                        (sale==0)?Expanded(
-                                          child: Text(
-                                            innerprice.toString()+" "+GlobalVariables.currency,
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ):Row(
-                                          children: [
-                                            Text(
-                                              innerprice.toString(),
+                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      width: 180,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Text(
+                                              i[1],
                                               style: TextStyle(
-                                                color: Colors.grey,
-                                                decoration: TextDecoration.lineThrough,
-                                                fontSize: 16,
-                                                decorationThickness: 2,
-                                                // fontWeight: FontWeight.bold,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.grey[600],
                                               ),
                                             ),
-                                            Text(
-                                              " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      width: 150,
+                                      child: Row(
+                                        children: <Widget>[
+                                          (sale==0)?Expanded(
+                                            child: Text(
+                                              innerprice.toString()+" "+GlobalVariables.currency,
                                               style: TextStyle(
                                                 fontSize: 17,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.green[600],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ):Row(
+                                            children: [
+                                              Text(
+                                                innerprice.toString(),
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  decoration: TextDecoration.lineThrough,
+                                                  fontSize: 16,
+                                                  decorationThickness: 2,
+                                                  // fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green[600],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        (sale==0)?Container():Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green[500],
-                            ),
-                            height: 20,
-                            width: 30,
-                            alignment: Alignment.topLeft,
-                            child: Center(
-                              child: Text(
-                                salepercent.toString()+'%',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        (stock_availability=="1")?Container():Center(
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              color: Colors.red[300].withOpacity(0.40),
-                            ),
-                            height: 25,
-                            width: 160,
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Out of Stock',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 16,
-                                letterSpacing: 1.0,
+                          (sale==0)?Container():Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.green[500],
+                              ),
+                              height: 20,
+                              width: 30,
+                              alignment: Alignment.topLeft,
+                              child: Center(
+                                child: Text(
+                                  salepercent.toString()+'%',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
+                          (stock_availability=="1")?Container():Center(
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                color: Colors.red[300].withOpacity(0.40),
+                              ),
+                              height: 25,
+                              width: 160,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Out of Stock',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 16,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-          ],
+              SizedBox(height: 25,),
+              Text(
+                'NEW ARRIVALS',
+                style: TextStyle(
+                  fontSize: 18,
+                  letterSpacing: 1.2,
+                  color: Colors.grey[800],
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 205,
+                width: double.infinity,
+                child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: new_arrivals_list.map<Widget>((i){
+                    var innerprice;
+                    var stock_availability;
+                    var sale=0;//0 means no sale(default), 1 means sale
+                    var saleprice;
+                    var salepercent;
+                    print(i);
+                    for(int x=0; x<i[3].length;x++){
+                      // print(i[3][x]);
+                      if(GlobalVariables.countryId.toString()==i[3][x][1]){
+                        innerprice=double.parse(i[3][x][4]);
+                        // print("hii");
+                        stock_availability=i[3][x][5];
+                        if(i[3][x][6].length!=0){
+                          sale=1;
+                          saleprice=double.parse(i[3][x][6][1]);
+                          print("saleprice="+saleprice.toString());
+                          salepercent=(innerprice-saleprice)/innerprice*100;
+                          salepercent = num.parse(salepercent.toStringAsFixed(0));
+                          print(salepercent.toString());
+                        }
+                      }
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 160,
+                            constraints: BoxConstraints(
+                                minWidth: 100, maxWidth: 200),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                color: Colors.grey[350],
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: FlatButton(
+                                padding: const EdgeInsets.all(0.0),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                                  ).then((value) {
+                                    widget.cartbadgecallback();
+                                  });
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .center,
+                                  crossAxisAlignment: CrossAxisAlignment
+                                      .center,
+                                  children: <Widget>[
+                                    Image.network(
+                                      'http://huzefam.sg-host.com/'+i[2],
+                                      height: 100,
+                                      width: 100,
+                                    ),
+                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      width: 180,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Text(
+                                              i[1],
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      width: 150,
+                                      child: Row(
+                                        children: <Widget>[
+                                          (sale==0)?Expanded(
+                                            child: Text(
+                                              innerprice.toString()+" "+GlobalVariables.currency,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ):Row(
+                                            children: [
+                                              Text(
+                                                innerprice.toString(),
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  decoration: TextDecoration.lineThrough,
+                                                  fontSize: 16,
+                                                  decorationThickness: 2,
+                                                  // fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green[600],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          (sale==0)?Container():Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.green[500],
+                              ),
+                              height: 20,
+                              width: 30,
+                              alignment: Alignment.topLeft,
+                              child: Center(
+                                child: Text(
+                                  salepercent.toString()+'%',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          (stock_availability=="1")?Container():Center(
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                color: Colors.red[300].withOpacity(0.40),
+                              ),
+                              height: 25,
+                              width: 160,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Out of Stock',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 16,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

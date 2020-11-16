@@ -24,6 +24,11 @@ class _HomeAppState extends State<HomeApp> {
         cartbadgecallback: () {
           setState(() {});
         },
+        backtohomecallback: () {
+          setState(() {
+            _currentindex=0;
+          });
+        },
         fromHomePage: true,
       );
     }

@@ -5,6 +5,7 @@ import 'package:building_materials_app/getlocation.dart';
 import 'package:building_materials_app/globalvars.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 
 void main() {
   runApp(MyApp());
@@ -64,7 +65,12 @@ class _MyAppState extends State<MyApp> {
         home: Builder(
           builder: (context) => Scaffold(
               resizeToAvoidBottomPadding: false,
-              body: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.red[300])))
+              body: DoubleBackToCloseApp(
+                child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.red[300]))),
+                snackBar: const SnackBar(
+                  content: Text('Tap back again to leave'),
+                ),
+              )
           ),
         ),
       );
