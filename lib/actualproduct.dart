@@ -234,7 +234,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
               ],
             ),
             Text(
-              product_name,
+              product_name+" ("+unit+")",
               style: TextStyle(
                 fontSize: 17,
               ),

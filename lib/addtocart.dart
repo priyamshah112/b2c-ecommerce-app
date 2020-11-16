@@ -185,14 +185,6 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                                   }
                                                   print(GlobalVariables.order_list);
                                                 }
-
-//                          if(GlobalVariables.allcartitems[widget.menuitem[0]][0]>0){
-//                            GlobalVariables.no_of_cart_items-=1;
-//                            GlobalVariables.allcartitems[widget.menuitem[0]][0]-=1;
-//                            GlobalVariables.totalcost-=GlobalVariables.allcartitems[widget.menuitem[0]][1];
-//                            // CHECK IF CART HAS NO ITEMS AND REMOVE BADGE AND 'PROCEED TO CART' FAB HERE
-//                            widget.badgecallback();
-//                          }
                                               });
                                             },
                                             elevation: 1,
@@ -228,11 +220,6 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                                 GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
                                                 total_price+=GlobalVariables.order_list[index][3];
                                                 print(GlobalVariables.order_list);
-//                            GlobalVariables.no_of_cart_items+=1;
-//                            GlobalVariables.allcartitems[widget.menuitem[0]][0]+=1;
-//                            GlobalVariables.totalcost+=GlobalVariables.allcartitems[widget.menuitem[0]][1];
-//                            // SET BADGE AND 'PROCEED TO CART' FAB HERE
-//                            widget.badgecallback();
                                               });
                                             },
                                             elevation: 1,
@@ -269,7 +256,6 @@ class _AddToCartPageState extends State<AddToCartPage> {
                       ),
                     ),
                   );
-
                 }).toList(),
             ),
           ),
