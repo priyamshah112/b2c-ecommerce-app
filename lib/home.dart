@@ -12,7 +12,9 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:http/http.dart' as http;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   VoidCallback cartbadgecallback;
@@ -118,6 +120,19 @@ class _HomePageState extends State<HomePage> {
         ),
         //centerTitle: true,
         actions: [
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: GestureDetector(
+              onTap: (){
+                FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "");
+              },
+              child: FaIcon(
+                FontAwesomeIcons.whatsapp,
+                color: Colors.green,
+                size: 22,
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: GestureDetector(
