@@ -919,6 +919,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                             var temp = [productId, quantity, price, quantity*price, product_name, images[0], sale, oldprice];
                             GlobalVariables.order_list.add(temp);
                             _addedToCart=true;
+                            GlobalVariables.total_cart_items+=quantity;
                             return 0;
                           }
                         }
@@ -934,7 +935,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                           result=addToCart(widget.productId, quantity, saleprice, product_name, sale, price);
                         }
                         _addedToCart=true;
-                        GlobalVariables.total_cart_items+=quantity;
+
                         print(GlobalVariables.order_list);
                         print("result="+result.toString());
                         Navigator.push(
