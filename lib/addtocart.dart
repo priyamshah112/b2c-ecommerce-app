@@ -78,185 +78,217 @@ class _AddToCartPageState extends State<AddToCartPage> {
             padding: EdgeInsets.fromLTRB(20,20,20,0),
             child: ListView(
               scrollDirection: Axis.vertical,
-                children: GlobalVariables.order_list.map((i){
-                  print("sale="+i[6].toString());
-                  print("oldprice="+i[7].toString());
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: ListTile(
-                          leading: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minWidth: 60,
-                              minHeight: 60,
-                              maxWidth: 80,
-                              maxHeight: 80,
-                            ),
-                            child: Image.network(
-                                'http://huzefam.sg-host.com/'+i[5],
-                                fit: BoxFit.cover,
-                            ),
-                          ),
-                          title: Padding(
-                            padding: const EdgeInsets.only(top: 12.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  i[4],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+              children: <Widget>[
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                    itemCount: GlobalVariables.order_list.length,
+                    itemBuilder:(BuildContext context, int index){
+                    var i = GlobalVariables.order_list[index];
+                      print("sale="+i[6].toString());
+                      print("oldprice="+i[7].toString());
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: ListTile(
+                              leading: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minWidth: 60,
+                                  minHeight: 60,
+                                  maxWidth: 80,
+                                  maxHeight: 80,
                                 ),
-                                SizedBox(height: 5),
-                                (i[6]==0)?Row(
+                                child: Image.network(
+                                    'http://huzefam.sg-host.com/'+i[5],
+                                    fit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      i[3].toString(),
+                                      i[4],
                                       style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      GlobalVariables.currency,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ):Row(
-                                  children: [
-                                    Text(
-                                      i[3].toString()+" "+GlobalVariables.currency+" ",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green[600]
-                                      ),
-                                    ),
-                                    Text(
-                                      i[7].toString()+" "+GlobalVariables.currency,
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        decoration: TextDecoration.lineThrough,
                                         fontSize: 16,
-                                        decorationThickness: 2,
-                                        // fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Container(
-                                    child: Row(
+                                    SizedBox(height: 5),
+                                    (i[6]==0)?Row(
                                       children: <Widget>[
                                         Text(
-                                          'Quantity:',
+                                          i[3].toString(),
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(width: 8,),
-                                        SizedBox(
-                                          width:25,
-                                          height:25,
-                                          child: FloatingActionButton(
-                                            heroTag: "minus"+i[0].toString(),
-                                            onPressed: (){
-                                              setState(() {
-                                                var index = GlobalVariables.order_list.indexOf(i);
-                                                if(GlobalVariables.order_list[index][1]!=0){
-                                                  GlobalVariables.order_list[index][1]-=1;
-                                                  GlobalVariables.total_cart_items-=1;
-                                                  if(widget.fromHomePage==true){
-                                                    widget.cartbadgecallback();
-                                                  }
-                                                  total_price-=GlobalVariables.order_list[index][3];
-                                                  GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
-                                                  total_price+=GlobalVariables.order_list[index][3];
-                                                  if(i[1]==0){
-                                                    GlobalVariables.order_list.removeWhere((product) => product[0] == i[0]);
-                                                  }
-                                                  print(GlobalVariables.order_list);
-                                                }
-                                              });
-                                            },
-                                            elevation: 1,
-                                            child: Icon(Icons.remove, size: 18),
-                                            backgroundColor: Colors.red[300],
-                                            mini: true,
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          GlobalVariables.currency,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                          child: Text(
-                                            i[1].toString(),
-                                            style: TextStyle(
-                                                fontSize: 18
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width:25,
-                                          height:25,
-                                          child: FloatingActionButton(
-                                            heroTag: "plus"+i[0].toString(),
-                                            onPressed: (){
-                                              setState(() {
-                                                var index = GlobalVariables.order_list.indexOf(i);
-                                                GlobalVariables.order_list[index][1]+=1;
-                                                GlobalVariables.total_cart_items+=1;
-                                                if(widget.fromHomePage==true){
-                                                  widget.cartbadgecallback();
-                                                }
-                                                total_price-=GlobalVariables.order_list[index][3];
-                                                GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
-                                                total_price+=GlobalVariables.order_list[index][3];
-                                                print(GlobalVariables.order_list);
-                                              });
-                                            },
-                                            elevation: 1,
-                                            child: Icon(Icons.add, size: 20),
-                                            backgroundColor: Colors.green[300],
-                                            mini:true,
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                                          ),
-                                        )
                                       ],
-                                    )
+                                    ):Row(
+                                      children: [
+                                        Text(
+                                          i[3].toString()+" "+GlobalVariables.currency+" ",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green[600]
+                                          ),
+                                        ),
+                                        Text(
+                                          i[7].toString()+" "+GlobalVariables.currency,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            decoration: TextDecoration.lineThrough,
+                                            fontSize: 16,
+                                            decorationThickness: 2,
+                                            // fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              'Quantity:',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(width: 8,),
+                                            SizedBox(
+                                              width:25,
+                                              height:25,
+                                              child: FloatingActionButton(
+                                                heroTag: "minus"+i[0].toString(),
+                                                onPressed: (){
+                                                  setState(() {
+                                                    var index = GlobalVariables.order_list.indexOf(i);
+                                                    if(GlobalVariables.order_list[index][1]!=0){
+                                                      GlobalVariables.order_list[index][1]-=1;
+                                                      GlobalVariables.total_cart_items-=1;
+                                                      if(widget.fromHomePage==true){
+                                                        widget.cartbadgecallback();
+                                                      }
+                                                      total_price-=GlobalVariables.order_list[index][3];
+                                                      GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
+                                                      total_price+=GlobalVariables.order_list[index][3];
+                                                      if(i[1]==0){
+                                                        GlobalVariables.order_list.removeWhere((product) => product[0] == i[0]);
+                                                      }
+                                                      print(GlobalVariables.order_list);
+                                                    }
+                                                  });
+                                                },
+                                                elevation: 1,
+                                                child: Icon(Icons.remove, size: 18),
+                                                backgroundColor: Colors.red[300],
+                                                mini: true,
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                              child: Text(
+                                                i[1].toString(),
+                                                style: TextStyle(
+                                                    fontSize: 18
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width:25,
+                                              height:25,
+                                              child: FloatingActionButton(
+                                                heroTag: "plus"+i[0].toString(),
+                                                onPressed: (){
+                                                  setState(() {
+                                                    var index = GlobalVariables.order_list.indexOf(i);
+                                                    GlobalVariables.order_list[index][1]+=1;
+                                                    GlobalVariables.total_cart_items+=1;
+                                                    if(widget.fromHomePage==true){
+                                                      widget.cartbadgecallback();
+                                                    }
+                                                    total_price-=GlobalVariables.order_list[index][3];
+                                                    GlobalVariables.order_list[index][3]=GlobalVariables.order_list[index][1] * GlobalVariables.order_list[index][2];
+                                                    total_price+=GlobalVariables.order_list[index][3];
+                                                    print(GlobalVariables.order_list);
+                                                  });
+                                                },
+                                                elevation: 1,
+                                                child: Icon(Icons.add, size: 20),
+                                                backgroundColor: Colors.green[300],
+                                                mini:true,
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          trailing: GestureDetector(
-                            onTap: (){
-                              setState(() {
-                                var index = GlobalVariables.order_list.indexOf(i);
-                                GlobalVariables.total_cart_items-=GlobalVariables.order_list[index][1];
-                                if(widget.fromHomePage==true){
-                                  widget.cartbadgecallback();
-                                }
-                                total_price-=GlobalVariables.order_list[index][3];
-                                GlobalVariables.order_list.removeWhere((product) => product[0] == i[0]);
-                                print(GlobalVariables.order_list);
-                              });
-                            },
-                            child: Icon(
-                            Icons.delete,
+                              ),
+                              trailing: GestureDetector(
+                                onTap: (){
+                                  setState(() {
+                                    var index = GlobalVariables.order_list.indexOf(i);
+                                    GlobalVariables.total_cart_items-=GlobalVariables.order_list[index][1];
+                                    if(widget.fromHomePage==true){
+                                      widget.cartbadgecallback();
+                                    }
+                                    total_price-=GlobalVariables.order_list[index][3];
+                                    GlobalVariables.order_list.removeWhere((product) => product[0] == i[0]);
+                                    print(GlobalVariables.order_list);
+                                  });
+                                },
+                                child: Icon(
+                                Icons.delete,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      );
+                    }
+                ),
+                SizedBox(height: 15,),
+                RaisedButton(
+                  color: Colors.black87,
+                  textColor: Colors.white,
+                  //disabledColor: Colors.grey,
+                  //disabledTextColor: Colors.black,
+                  padding: EdgeInsets.all(8.0),
+                  splashColor: Colors.grey,
+                  onPressed: () {
+                    if(widget.fromHomePage==false){
+                      Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
+                    }
+                    else{
+                      widget.backtohomecallback();
+                    }
+                  },
+                  child: Text(
+                    "Continue Shopping",
+                    style: TextStyle(
+                      fontSize: 16.0,
                     ),
-                  );
-                }).toList(),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -410,25 +442,3 @@ class _AddToCartPageState extends State<AddToCartPage> {
     );
   }
 }
-
-//                SizedBox(height: 15,),
-//                RaisedButton(
-//                  color: Colors.black87,
-//                  textColor: Colors.white,
-//                  //disabledColor: Colors.grey,
-//                  //disabledTextColor: Colors.black,
-//                  padding: EdgeInsets.all(8.0),
-//                  splashColor: Colors.blueAccent,
-//                  onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(builder: (context) => HomePage()),
-//                    );
-//                  },
-//                  child: Text(
-//                    "Continue Shopping",
-//                    style: TextStyle(
-//                      fontSize: 16.0,
-//                    ),
-//                  ),
-//                )

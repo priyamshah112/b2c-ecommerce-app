@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
   VoidCallback cartbadgecallback;
@@ -52,6 +53,8 @@ class _HomePageState extends State<HomePage> {
 
   var _featured_loading=true;
   var featured_list=[];
+
+
 
   @override
   void initState() {
@@ -108,6 +111,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final RenderBox box = context.findRenderObject();
     return Scaffold(
       appBar: AppBar(
         //leading: Icon(Icons.menu),
@@ -287,6 +291,19 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(builder: (context) => AboutUsPage()),
                   );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Tell a friend',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    letterSpacing: 0.7,
+                  ),
+                ),
+                onTap: () {
+                  Share.share('Checkout this app', subject: 'Checkout this app', sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
                 },
               ),
             ],
