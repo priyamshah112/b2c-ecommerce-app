@@ -233,7 +233,78 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height:20),
-              CarouselSlider(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 1,categoryName: 'Bathroom Fittings')),
+                      ).then((value) {
+                        widget.cartbadgecallback();
+                      });
+                    },
+                    child: Card(
+                      //padding: EdgeInsets.all(0),
+                      margin: EdgeInsets.zero,
+                      elevation: 5,
+                      child: SizedBox(
+                        height: 180,
+                        child: Image.asset(
+                          'assets/images/home1.png',
+//                      height: 200,
+                        fit: BoxFit.fill,
+                          width: MediaQuery.of(context).size.width * 0.5 - 25,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //SizedBox(width: 10,),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 2,categoryName: 'Building Materials')),
+                      ).then((value) {
+                        widget.cartbadgecallback();
+                      });
+                    },
+                    child: Card(
+                      margin: EdgeInsets.zero,
+                      elevation: 5,
+                      child: SizedBox(
+                        height: 180,
+                        child: Image.asset(
+                          'assets/images/home2.png',
+                          fit: BoxFit.fill,
+                          width: MediaQuery.of(context).size.width * 0.5 - 25,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              InkWell(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 3,categoryName: 'Fasteners')),
+                  ).then((value) {
+                    widget.cartbadgecallback();
+                  });
+                },
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  elevation: 5,
+                  child: Image.asset(
+                    'assets/images/home3.png',
+                    width: double.infinity,
+                  ),
+                ),
+              ),
+              /*CarouselSlider(
                 options: CarouselOptions(
                   height: 200.0,
                   autoPlay: true,
@@ -274,23 +345,23 @@ class _HomePageState extends State<HomePage> {
                       }
                   );
                 }).toList(),
-              ),
-              SizedBox(height:10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: map<Widget>(cardList, (index, url) {
-                  return Container(
-                    width: 7.0,
-                    height: 7.0,
-                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentIndex == index ? Colors.black87 : Colors.grey,
-                    ),
-                  );
-                }),
-              ),
-              SizedBox(height: 18,),
+              ),*/
+              //SizedBox(height:10),
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: map<Widget>(cardList, (index, url) {
+//                  return Container(
+//                    width: 7.0,
+//                    height: 7.0,
+//                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+//                    decoration: BoxDecoration(
+//                      shape: BoxShape.circle,
+//                      color: _currentIndex == index ? Colors.black87 : Colors.grey,
+//                    ),
+//                  );
+//                }),
+//              ),
+              SizedBox(height: 28,),
               Text(
                 'STOCK CLEARANCE SALE',
                 style: TextStyle(
