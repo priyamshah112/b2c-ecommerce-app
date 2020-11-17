@@ -208,6 +208,37 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 ),
               ],
             ),
+            /*ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 90,
+              ),
+              child: Container(
+                decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: Colors.grey[350],
+                  ),
+                ),
+                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Icon(
+                      Icons.share,
+                      size: 15,
+                      color: Colors.black54,
+                    ),
+                    SizedBox(width: 8,),
+                    Text(
+                        'Share',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),*/
             (stock_availability=="1")?Container():
             Column(
               children: [
@@ -243,7 +274,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
             (sale==0)?Row(
               children: <Widget>[
                 Text(
-                  price.toString(),
+                  "Price: "+price.toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

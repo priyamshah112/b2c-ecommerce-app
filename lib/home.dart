@@ -194,14 +194,92 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ListTile(
-                title: Center(
-                  child: Text(
-                    'About Us',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
-                      letterSpacing: 0.7,
+                title: Text(
+                  'Home',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    letterSpacing: 0.7,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(
+                    context
+                  );
+                },
+              ),
+              ExpansionTile(
+                title: Text(
+                  'Shop',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    letterSpacing: 0.7,
+                  ),
+                ),
+                children: <Widget>[
+                  InkWell(
+                    child: Text(
+                      'Bathroom Fittings',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
                     ),
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 1,categoryName: 'Bathroom Fittings')),
+                      ).then((value) {
+                        widget.cartbadgecallback();
+                      });
+                    },
+                  ),
+                  SizedBox(height: 10,),
+                  InkWell(
+                    child: Text(
+                      'Building Materials',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 2,categoryName: 'Building Materials')),
+                      ).then((value) {
+                        widget.cartbadgecallback();
+                      });
+                    },
+                  ),
+                  SizedBox(height: 10,),
+                  InkWell(
+                    child: Text(
+                      'Fasteners',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 3,categoryName: 'Fasteners')),
+                      ).then((value) {
+                        widget.cartbadgecallback();
+                      });
+                    },
+                  ),
+                ],
+              ),
+              ListTile(
+                title: Text(
+                  'About Us',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    letterSpacing: 0.7,
                   ),
                 ),
                 onTap: () {
@@ -911,6 +989,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: 20),
+              //Footer
+              Image.asset(
+                'assets/images/bathroom_fittings.jpeg',
+              ),
             ],
           ),
         ),
