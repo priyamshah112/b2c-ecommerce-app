@@ -902,6 +902,41 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     tag: Text("buynow"),
                     child: RaisedButton(
                       onPressed: () {
+                        int addToCart(int productId, int quantity, double price, var product_name, var sale, var oldprice){
+                          bool flag = false;
+                          for(int i=0;i<GlobalVariables.order_list.length;i++) {
+                            if (productId == GlobalVariables.order_list[i][0]) {
+                              flag = true;
+                              break;
+                            }
+                          }
+                          if(flag==true){
+                            //success
+                            return 1;
+                          }
+                          else{
+                            //adding to cart
+                            var temp = [productId, quantity, price, quantity*price, product_name, images[0], sale, oldprice];
+                            GlobalVariables.order_list.add(temp);
+                            _addedToCart=true;
+                            return 0;
+                          }
+                        }
+                        int result;
+                        print("sale="+sale.toString());
+                        if(quantity == 0){
+                          quantity=1;
+                        }
+                        if(sale==0){
+                          result=addToCart(widget.productId, quantity, price, product_name, sale, price);
+                        }
+                        else{
+                          result=addToCart(widget.productId, quantity, saleprice, product_name, sale, price);
+                        }
+                        _addedToCart=true;
+                        GlobalVariables.total_cart_items+=quantity;
+                        print(GlobalVariables.order_list);
+                        print("result="+result.toString());
                         Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => AddToCartPage(fromHomePage: false,)),
