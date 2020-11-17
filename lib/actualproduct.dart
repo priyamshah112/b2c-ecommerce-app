@@ -264,7 +264,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 SizedBox(height:10),
               ],
             ),
-            Text(
+            (unit=="")?Text(
+              product_name,
+              style: TextStyle(
+                fontSize: 17,
+              ),
+            ):Text(
               product_name+" ("+unit+")",
               style: TextStyle(
                 fontSize: 17,

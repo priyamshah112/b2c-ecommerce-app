@@ -223,11 +223,17 @@ class _HomePageState extends State<HomePage> {
                 ),
                 children: <Widget>[
                   InkWell(
-                    child: Text(
-                      'Bathroom Fittings',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:25,bottom:8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '> Bathroom Fittings',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black87,
+                          ),
+                        ),
                       ),
                     ),
                     onTap: (){
@@ -241,11 +247,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 10,),
                   InkWell(
-                    child: Text(
-                      'Building Materials',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:25,bottom:8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '> Building Materials',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black87,
+                          ),
+                        ),
                       ),
                     ),
                     onTap: (){
@@ -259,11 +271,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 10,),
                   InkWell(
-                    child: Text(
-                      'Fasteners',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:25,bottom:16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '> Fasteners',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black87,
+                          ),
+                        ),
                       ),
                     ),
                     onTap: (){
@@ -335,7 +353,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 1,categoryName: 'Bathroom Fittings')),
+                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 1, categoryName: 'Bathroom Fittings')),
                       ).then((value) {
                         widget.cartbadgecallback();
                       });
@@ -523,7 +541,7 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment
-                                      .center,
+                                      .start,
                                   crossAxisAlignment: CrossAxisAlignment
                                       .center,
                                   children: <Widget>[
@@ -709,7 +727,7 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment
-                                      .center,
+                                      .start,
                                   crossAxisAlignment: CrossAxisAlignment
                                       .center,
                                   children: <Widget>[
@@ -895,7 +913,7 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment
-                                      .center,
+                                      .start,
                                   crossAxisAlignment: CrossAxisAlignment
                                       .center,
                                   children: <Widget>[

@@ -114,7 +114,7 @@ class _CategoryPageState extends State<CategoryPage> {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          child: ListView(
+          child: (product_category.length==0)?Center(child: Text("New Products Coming Up Soon!")):ListView(
             scrollDirection: Axis.vertical,
             children: product_category.map((i){
               var imagepath="products/0T1YR2.jpg";

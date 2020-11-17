@@ -89,7 +89,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
                       print("sale="+i[6].toString());
                       print("oldprice="+i[7].toString());
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
+                        padding: const EdgeInsets.only(bottom: 5.0),
                         child: Card(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
