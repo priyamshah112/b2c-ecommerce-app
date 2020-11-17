@@ -152,7 +152,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                       ),
                       SizedBox(height: 20),
                       SizedBox(
-                          height: 205,
+                          height: 220,
                           width: double.infinity,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
@@ -184,7 +184,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                 child: Stack(
                                   children: [
                                     Container(
-                                      height: 200,
+                                      height: 220,
                                       width: 160,
                                       constraints: BoxConstraints(
                                           minWidth: 100, maxWidth: 200),
@@ -214,10 +214,13 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                             crossAxisAlignment: CrossAxisAlignment
                                                 .center,
                                             children: <Widget>[
-                                              Image.network(
-                                                'http://huzefam.sg-host.com/'+i[3],
-                                                height: 100,
-                                                width: 100,
+                                              SizedBox(
+                                                height: 130,
+                                                width: double.infinity,
+                                                child: Image.network(
+                                                  'http://huzefam.sg-host.com/'+i[3],
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                               SizedBox(height: 5,),
                                               SizedBox(

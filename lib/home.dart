@@ -467,7 +467,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                height: 205,
+                height: 220,
                 width: double.infinity,
                 child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
                   scrollDirection: Axis.horizontal,
@@ -499,7 +499,7 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Container(
-                            height: 200,
+                            height: 220,
                             width: 160,
                             constraints: BoxConstraints(
                                 minWidth: 100, maxWidth: 200),
@@ -527,10 +527,13 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment
                                       .center,
                                   children: <Widget>[
-                                    Image.network(
-                                      'http://huzefam.sg-host.com/'+i[2],
-                                      height: 100,
-                                      width: 100,
+                                    SizedBox(
+                                      height: 130,
+                                      width: double.infinity,
+                                      child: Image.network(
+                                        'http://huzefam.sg-host.com/'+i[2],
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                     SizedBox(height: 5,),
                                     SizedBox(
@@ -650,7 +653,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                height: 205,
+                height: 220,
                 width: double.infinity,
                 child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
                   scrollDirection: Axis.horizontal,
@@ -682,7 +685,7 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Container(
-                            height: 200,
+                            height: 220,
                             width: 160,
                             constraints: BoxConstraints(
                                 minWidth: 100, maxWidth: 200),
@@ -710,10 +713,13 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment
                                       .center,
                                   children: <Widget>[
-                                    Image.network(
-                                      'http://huzefam.sg-host.com/'+i[2],
-                                      height: 100,
-                                      width: 100,
+                                    SizedBox(
+                                      height:130,
+                                      width: double.infinity,
+                                      child: Image.network(
+                                        'http://huzefam.sg-host.com/'+i[2],
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                     SizedBox(height: 5,),
                                     SizedBox(
@@ -833,7 +839,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                height: 205,
+                height: 220,
                 width: double.infinity,
                 child: (_featured_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
                   scrollDirection: Axis.horizontal,
@@ -865,7 +871,7 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Container(
-                            height: 200,
+                            height: 220,
                             width: 160,
                             constraints: BoxConstraints(
                                 minWidth: 100, maxWidth: 200),
@@ -893,10 +899,13 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment
                                       .center,
                                   children: <Widget>[
-                                    Image.network(
-                                      'http://huzefam.sg-host.com/'+i[2],
-                                      height: 100,
-                                      width: 100,
+                                    SizedBox(
+                                      height: 130,
+                                      width: double.infinity,
+                                      child: Image.network(
+                                        'http://huzefam.sg-host.com/'+i[2],
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                     SizedBox(height: 5,),
                                     SizedBox(
