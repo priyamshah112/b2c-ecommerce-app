@@ -58,14 +58,17 @@ class _CategoryPageState extends State<CategoryPage> {
             Navigator.pop(context);
           },
           child: Icon(
-              Icons.arrow_back_ios,
+            Icons.arrow_back_ios,
+            color: Colors.black87,
+            size: 22,
           ),
         ),
         title: Text(
           widget.categoryName,
           style: TextStyle(
             fontSize: 18,
-            letterSpacing: 0.5,
+            color: Colors.black87,
+            //letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
@@ -99,6 +102,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                   child: Icon(
                     Icons.shopping_cart,
+                    color: Colors.black87,
                     // FontAwesomeIcons.map,
                     size: 25.0,
                   ),
@@ -107,7 +111,7 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
           //Icon(Icons.more_vert),
         ],
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.white,
       ),
       body: (_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),

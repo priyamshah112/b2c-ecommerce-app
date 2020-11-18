@@ -115,10 +115,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         //leading: Icon(Icons.menu),
+        elevation: 5,
         title: Text(
             'Home',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 18,
           ),
         ),
@@ -150,30 +151,14 @@ class _HomePageState extends State<HomePage> {
               },
               child: Icon(
                 Icons.search,
-                color: Colors.white,
+                color: Colors.black87,
                 size: 22,
               ),
             ),
           ),
-          /*Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddToCartPage()),
-                );
-              },
-              child: Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-                size: 22,
-              ),
-            ),
-          ),*/
-          //Icon(Icons.more_vert),
         ],
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.white,
+        iconTheme: new IconThemeData(color: Colors.black87),
       ),
       drawer: Container(
         width: 280,
@@ -321,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Share.share('Checkout this app', subject: 'Checkout this app', sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                  Share.share('Checkout this app: https://play.google.com/store/apps/details?id=com.example.building_materials_app', subject: 'Checkout this app', sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
                 },
               ),
             ],
@@ -562,9 +547,9 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               i[1],
                                               style: TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w400,
-                                                color: Colors.grey[600],
+                                                color: Colors.black87,
                                               ),
                                             ),
                                           ),
@@ -748,9 +733,9 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               i[1],
                                               style: TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w400,
-                                                color: Colors.grey[600],
+                                                color: Colors.black87,
                                               ),
                                             ),
                                           ),
@@ -934,9 +919,9 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               i[1],
                                               style: TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w400,
-                                                color: Colors.grey[600],
+                                                color: Colors.black87,
                                               ),
                                             ),
                                           ),

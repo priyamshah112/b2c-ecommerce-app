@@ -138,11 +138,15 @@ class _ActualProductPageState extends State<ActualProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: GestureDetector(
           onTap: (){
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back_ios,
+          child: Icon(
+            Icons.arrow_back_ios,
+            size: 22,
+            color: Colors.black87,
           ),
         ),
 //        title: Text(
@@ -172,10 +176,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   GlobalVariables.total_cart_items.toString(),
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
                 child: Icon(
                   Icons.shopping_cart,
+                  color: Colors.black87,
                   // FontAwesomeIcons.map,
                   size: 25.0,
                 ),
@@ -184,7 +190,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
           ),
           //Icon(Icons.more_vert),
         ],
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
       ),
       body: (_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Padding(
         padding: EdgeInsets.fromLTRB(20.0, 10, 20.0, 0),
@@ -239,6 +245,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 ),
               ),
             ),*/
+            SizedBox(height: 10),
             (stock_availability=="1")?Container():
             Column(
               children: [
@@ -261,21 +268,21 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     ),
                   ),
                 ),
-                SizedBox(height:10),
+                SizedBox(height:15),
               ],
             ),
             (unit=="")?Text(
               product_name,
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 18,
               ),
             ):Text(
               product_name+" ("+unit+")",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 18,
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 15,),
             (sale==0)?Row(
               children: <Widget>[
                 Text(
@@ -285,7 +292,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     fontSize: 18,
                   ),
                 ),
-                SizedBox(width: 5),
+                SizedBox(width: 15),
                 Text(
                   currency,
                   style: TextStyle(
@@ -299,7 +306,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 Text(
                   "Price: ",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -323,6 +330,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 ),
               ],
             ),
+            SizedBox(height: 8),
             (sale==0)?Container():Padding(
               padding: const EdgeInsets.only(top:8.0),
               child: Container(
@@ -352,7 +360,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   Text(
                     'Quantity:',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -407,7 +415,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     child: Text(
                       quantity.toString(),
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 18,
                       ),
                     ),
                   ),
@@ -469,7 +477,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -497,7 +505,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -524,7 +532,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -551,7 +559,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -578,7 +586,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -605,7 +613,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -632,7 +640,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -659,7 +667,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -686,7 +694,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -713,7 +721,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -740,7 +748,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -767,7 +775,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -794,7 +802,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.5,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),

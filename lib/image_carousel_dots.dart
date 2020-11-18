@@ -54,8 +54,8 @@ class _CarouselState extends State<Carousel> with SingleTickerProviderStateMixin
       ),
       length: _list.length,
       padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-      indicatorSpace: 10,
-      size: 8,
+      indicatorSpace: 6,
+      size: 7,
       indicatorColor: Colors.grey[350],
       indicatorSelectorColor: Colors.black87,
     );

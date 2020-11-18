@@ -79,13 +79,17 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
             Navigator.pop(context);
           },
           child: Icon(
-              Icons.arrow_back_ios,
+            Icons.arrow_back_ios,
+            color: Colors.black87,
+            size: 22,
           ),
         ),
         title: Text(
           widget.productCategoryName,
           style: TextStyle(
             fontSize: 18,
+            color: Colors.black87,
+            //letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
@@ -116,6 +120,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                   ),
                   child: Icon(
                     Icons.shopping_cart,
+                    color: Colors.black87,
                     // FontAwesomeIcons.map,
                     size: 25.0,
                   ),
@@ -124,7 +129,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
           ),
           //Icon(Icons.more_vert),
         ],
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.white,
       ),
       body: (_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Padding(
         padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
