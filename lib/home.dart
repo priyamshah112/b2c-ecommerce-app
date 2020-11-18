@@ -54,7 +54,8 @@ class _HomePageState extends State<HomePage> {
   var _featured_loading=true;
   var featured_list=[];
 
-
+  var _footer_loading=true;
+  var footer_pic;
 
   @override
   void initState() {
@@ -107,6 +108,22 @@ class _HomePageState extends State<HomePage> {
       });
     }
     featured_info();
+
+    Future<void> get_footer_pic() async {
+      final response = await http.post(
+        "http://huzefam.sg-host.com/getFooterPic.php",
+      );
+      var decodedResponse = json.decode(response.body);
+      // print(decodedResponse);
+      print(decodedResponse['image_location']);
+      // print(decodedResponse['product_info'][0][3]);
+      footer_pic=decodedResponse['image_location'].toString();
+
+      setState(() {
+        _footer_loading=false;
+      });
+    }
+    get_footer_pic();
   }
 
   @override
@@ -1019,9 +1036,14 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               //Footer
-              Image.asset(
-                'assets/images/bathroom_fittings.jpeg',
-              ),
+              Container(
+                height:200,
+                width: MediaQuery.of(context).size.width * 0.5 - 40,
+                child: (_footer_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Image.network(
+                  'http://huzefam.sg-host.com/'+footer_pic,
+                ),
+              )
+
             ],
           ),
         ),
