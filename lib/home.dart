@@ -582,28 +582,28 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               innerprice.toString()+" "+GlobalVariables.currency,
                                               style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ):Row(
                                             children: [
                                               Text(
-                                                innerprice.toString(),
+                                                saleprice.toString()+" "+GlobalVariables.currency+" ",
                                                 style: TextStyle(
-                                                  color: Colors.grey,
-                                                  decoration: TextDecoration.lineThrough,
-                                                  fontSize: 16,
-                                                  decorationThickness: 2,
-                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  // color: Colors.green[600],
                                                 ),
                                               ),
                                               Text(
-                                                " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                                innerprice.toString(),
                                                 style: TextStyle(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.green[600],
+                                                  color: Colors.green[600],
+                                                  decoration: TextDecoration.lineThrough,
+                                                  fontSize: 16,
+                                                  decorationThickness: 1,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                               ),
                                             ],
@@ -768,28 +768,29 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               innerprice.toString()+" "+GlobalVariables.currency,
                                               style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ):Row(
                                             children: [
                                               Text(
-                                                innerprice.toString(),
+                                                saleprice.toString()+" "+GlobalVariables.currency+" ",
                                                 style: TextStyle(
-                                                  color: Colors.grey,
-                                                  decoration: TextDecoration.lineThrough,
-                                                  fontSize: 16,
-                                                  decorationThickness: 2,
-                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  // color: Colors.green[600],
                                                 ),
                                               ),
                                               Text(
-                                                " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                                innerprice.toString(),
                                                 style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
                                                   color: Colors.green[600],
+                                                  decoration: TextDecoration.lineThrough,
+                                                  fontSize: 16,
+                                                  decorationThickness: 1,
+                                                  fontWeight: FontWeight.w400,
+                                                  // fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ],
@@ -954,30 +955,32 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               innerprice.toString()+" "+GlobalVariables.currency,
                                               style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ):Row(
                                             children: [
                                               Text(
-                                                innerprice.toString(),
+                                                saleprice.toString()+" "+GlobalVariables.currency+" ",
                                                 style: TextStyle(
-                                                  color: Colors.grey,
-                                                  decoration: TextDecoration.lineThrough,
-                                                  fontSize: 16,
-                                                  decorationThickness: 2,
-                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+
                                                 ),
                                               ),
                                               Text(
-                                                " "+saleprice.toString()+" "+GlobalVariables.currency,
+                                                innerprice.toString(),
                                                 style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
                                                   color: Colors.green[600],
+                                                  decoration: TextDecoration.lineThrough,
+                                                  fontSize: 16,
+                                                  decorationThickness: 1,
+                                                  fontWeight: FontWeight.w400,
+                                                  // fontWeight: FontWeight.bold,
                                                 ),
                                               ),
+
                                             ],
                                           ),
                                         ],

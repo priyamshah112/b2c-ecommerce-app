@@ -289,15 +289,15 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   "Price: "+price.toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 22,
                   ),
                 ),
-                SizedBox(width: 15),
+                SizedBox(width: 5),
                 Text(
                   currency,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 22,
                   ),
                 ),
               ],
@@ -306,16 +306,16 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 Text(
                   "Price: ",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   saleprice.toString()+" "+currency+" ",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green[600]
+                      // color: Colors.green[600]
                   ),
                 ),
                 Text(
