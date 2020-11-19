@@ -950,8 +950,19 @@ class _ActualProductPageState extends State<ActualProductPage> {
                         context,
                         MaterialPageRoute(builder: (context) => AddToCartPage(fromHomePage: false,)),
                         ).then((value) {
-                          setState(() {
 
+                          _addedToCart=false;
+                          quantity=0;
+                          for(int i=0; i<GlobalVariables.order_list.length;i++){
+                            if(widget.productId==GlobalVariables.order_list[i][0]){
+                              quantity=GlobalVariables.order_list[i][1];
+                              _addedToCart=true;
+                              break;
+                            }
+                          }
+
+                          setState(() {
+                            print("_addedToCart after setstate="+_addedToCart.toString());
                           });
                         });
                       },

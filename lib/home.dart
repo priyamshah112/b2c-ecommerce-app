@@ -673,7 +673,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                height: 220,
+                height: 280,
                 width: double.infinity,
                 child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
                   scrollDirection: Axis.horizontal,
@@ -705,8 +705,8 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Container(
-                            height: 220,
-                            width: 160,
+                            height: 280,
+                            width: 190,
                             constraints: BoxConstraints(
                                 minWidth: 100, maxWidth: 200),
                             decoration: BoxDecoration(
@@ -734,7 +734,7 @@ class _HomePageState extends State<HomePage> {
                                       .center,
                                   children: <Widget>[
                                     SizedBox(
-                                      height:130,
+                                      height:180,
                                       width: double.infinity,
                                       child: Image.network(
                                         'http://huzefam.sg-host.com/'+i[2],
@@ -761,7 +761,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     SizedBox(height: 5,),
                                     SizedBox(
-                                      width: 150,
+                                      width: double.infinity,
                                       child: Row(
                                         children: <Widget>[
                                           (sale==0)?Expanded(
@@ -860,7 +860,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                height: 220,
+                height: 280,
                 width: double.infinity,
                 child: (_featured_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
                   scrollDirection: Axis.horizontal,
@@ -892,8 +892,8 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Container(
-                            height: 220,
-                            width: 160,
+                            height: 280,
+                            width: 190,
                             constraints: BoxConstraints(
                                 minWidth: 100, maxWidth: 200),
                             decoration: BoxDecoration(
@@ -921,7 +921,7 @@ class _HomePageState extends State<HomePage> {
                                       .center,
                                   children: <Widget>[
                                     SizedBox(
-                                      height: 130,
+                                      height: 180,
                                       width: double.infinity,
                                       child: Image.network(
                                         'http://huzefam.sg-host.com/'+i[2].toString(),
