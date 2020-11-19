@@ -487,7 +487,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                height: 220,
+                height: 280,
                 width: double.infinity,
                 child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
                   scrollDirection: Axis.horizontal,
@@ -519,8 +519,8 @@ class _HomePageState extends State<HomePage> {
                       child: Stack(
                         children: [
                           Container(
-                            height: 220,
-                            width: 160,
+                            height: 280,
+                            width: 190,
                             constraints: BoxConstraints(
                                 minWidth: 100, maxWidth: 200),
                             decoration: BoxDecoration(
@@ -548,7 +548,7 @@ class _HomePageState extends State<HomePage> {
                                       .center,
                                   children: <Widget>[
                                     SizedBox(
-                                      height: 130,
+                                      height: 180,
                                       width: double.infinity,
                                       child: Image.network(
                                         'http://huzefam.sg-host.com/'+i[2],
@@ -575,7 +575,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     SizedBox(height: 5,),
                                     SizedBox(
-                                      width: 150,
+                                      width: double.infinity,
                                       child: Row(
                                         children: <Widget>[
                                           (sale==0)?Expanded(
@@ -871,7 +871,7 @@ class _HomePageState extends State<HomePage> {
                     var saleprice;
                     var salepercent;
                     print(i);
-                    for(int x=0; x<i[3].length;x++){
+                    /*for(int x=0; x<i[3].length;x++){
                       // print(i[3][x]);
                       if(GlobalVariables.countryId.toString()==i[3][x][1]){
                         innerprice=double.parse(i[3][x][4]);
@@ -886,7 +886,7 @@ class _HomePageState extends State<HomePage> {
                           print(salepercent.toString());
                         }
                       }
-                    }
+                    }*/
                     return Padding(
                       padding: const EdgeInsets.only(right: 20.0),
                       child: Stack(
@@ -924,7 +924,7 @@ class _HomePageState extends State<HomePage> {
                                       height: 130,
                                       width: double.infinity,
                                       child: Image.network(
-                                        'http://huzefam.sg-host.com/'+i[2],
+                                        'http://huzefam.sg-host.com/'+i[2].toString(),
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -947,7 +947,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     SizedBox(height: 5,),
-                                    SizedBox(
+                                    /*SizedBox(
                                       width: 150,
                                       child: Row(
                                         children: <Widget>[
@@ -985,13 +985,13 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ),*/
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          (sale==0)?Container():Padding(
+                          /*(sale==0)?Container():Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: new BoxDecoration(
@@ -1030,7 +1030,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     );

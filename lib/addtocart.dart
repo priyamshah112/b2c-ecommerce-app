@@ -60,7 +60,16 @@ class _AddToCartPageState extends State<AddToCartPage> {
            onPressed: (){
              Navigator.pop(context);
            },
-         ):Container(),
+         ):IconButton(
+           icon: Icon(
+             Icons.arrow_back_ios,
+             size: 22,
+           ),
+           color: Colors.black87,
+           onPressed: (){
+             widget.backtohomecallback();
+           },
+         ),
           title: Text(
             'Shopping Cart',
             style: TextStyle(

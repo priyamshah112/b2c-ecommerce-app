@@ -202,7 +202,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
               children: <Widget>[
                 GestureDetector(
                   child: Container(
-                    height: 300,
+                    height: 400,
                     width: 300,
                     child: Carousel(images: images),
                   ),
@@ -353,105 +353,105 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 ),
               ),
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 25,),
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
                     'Quantity:',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(width: 8,),
-                  SizedBox(
-                    width:30,
-                    height:30,
-                    child: FloatingActionButton(
-                      heroTag: "minus",
-                      onPressed: (){
-                        setState(() {
-                          if(quantity!=0){
-                            quantity-=1;
+                  Container(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width:30,
+                          height:30,
+                          child: FloatingActionButton(
+                            heroTag: "minus",
+                            onPressed: (){
+                              setState(() {
+                                if(quantity!=0){
+                                  quantity-=1;
+                                  void quantityChange(int productId, int new_quantity){
+                                    for(int i=0;i<GlobalVariables.order_list.length;i++) {
+                                      if (productId == GlobalVariables.order_list[i][0]) {
+                                        GlobalVariables.total_cart_items-=1;
+                                        GlobalVariables.order_list[i][1]=new_quantity;
+                                        GlobalVariables.order_list[i][3]=new_quantity * GlobalVariables.order_list[i][2];
+                                        break;
+                                      }
+                                    }
+                                  }
+                                  quantityChange(widget.productId, quantity);
 
-                            void quantityChange(int productId, int new_quantity){
-                              for(int i=0;i<GlobalVariables.order_list.length;i++) {
-                                if (productId == GlobalVariables.order_list[i][0]) {
-                                  GlobalVariables.total_cart_items-=1;
-                                  GlobalVariables.order_list[i][1]=new_quantity;
-                                  GlobalVariables.order_list[i][3]=new_quantity * GlobalVariables.order_list[i][2];
-                                  break;
+                                  if(quantity==0){
+                                    GlobalVariables.order_list.removeWhere((product) => product[0] == widget.productId);
+                                    _addedToCart=false;
+                                  }
+                                  print(GlobalVariables.order_list);
                                 }
-                              }
-                            }
-                            quantityChange(widget.productId, quantity);
-
-                            if(quantity==0){
-                              GlobalVariables.order_list.removeWhere((product) => product[0] == widget.productId);
-                              _addedToCart=false;
-                            }
-                            print(GlobalVariables.order_list);
-                          }
-
-//                          if(GlobalVariables.allcartitems[widget.menuitem[0]][0]>0){
-//                            GlobalVariables.no_of_cart_items-=1;
-//                            GlobalVariables.allcartitems[widget.menuitem[0]][0]-=1;
-//                            GlobalVariables.totalcost-=GlobalVariables.allcartitems[widget.menuitem[0]][1];
-//                            // CHECK IF CART HAS NO ITEMS AND REMOVE BADGE AND 'PROCEED TO CART' FAB HERE
-//                            widget.badgecallback();
-//                          }
-                        });
-                      },
-                      elevation: 1,
-                      child: Icon(Icons.remove, size: 18),
-                      backgroundColor: Colors.red[300],
-                      mini: true,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                              });
+                            },
+                            elevation: 1,
+                            child: Icon(Icons.remove, size: 18),
+                            // backgroundColor: Colors.red[300],
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            mini: true,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)),side: BorderSide(color: Colors.black87, width: 2.0)),
+                          ),
+                        ),
+                        SizedBox(width:5),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: Text(
+                            quantity.toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width:5),
+                        SizedBox(
+                          width:30,
+                          height:30,
+                          child: FloatingActionButton(
+                            heroTag: "plus",
+                            onPressed: (){
+                              setState(() {
+                                quantity+=1;
+                                void quantityChange(int productId, int new_quantity){
+                                  for(int i=0;i<GlobalVariables.order_list.length;i++) {
+                                    if (productId == GlobalVariables.order_list[i][0]) {
+                                      GlobalVariables.total_cart_items+=1;//only do this if it is added in the order_list
+                                      GlobalVariables.order_list[i][1]=new_quantity;
+                                      GlobalVariables.order_list[i][3]=new_quantity * GlobalVariables.order_list[i][2];
+                                      break;
+                                    }
+                                  }
+                                }
+                                quantityChange(widget.productId, quantity);
+                              });
+                            },
+                            elevation: 1,
+                            child: Icon(Icons.add, size: 20),
+                            // backgroundColor: Colors.green[300],
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            mini: true,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)),side: BorderSide(color: Colors.black87, width: 2.0)),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: Text(
-                      quantity.toString(),
-                      style: TextStyle(
-                          fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width:30,
-                    height:30,
-                    child: FloatingActionButton(
-                      heroTag: "plus",
-                      onPressed: (){
-                        setState(() {
-                          quantity+=1;
-                          void quantityChange(int productId, int new_quantity){
-                            for(int i=0;i<GlobalVariables.order_list.length;i++) {
-                              if (productId == GlobalVariables.order_list[i][0]) {
-                                GlobalVariables.total_cart_items+=1;//only do this if it is added in the order_list
-                                GlobalVariables.order_list[i][1]=new_quantity;
-                                GlobalVariables.order_list[i][3]=new_quantity * GlobalVariables.order_list[i][2];
-                                break;
-                              }
-                            }
-                          }
-                          quantityChange(widget.productId, quantity);
-//                            GlobalVariables.no_of_cart_items+=1;
-//                            GlobalVariables.allcartitems[widget.menuitem[0]][0]+=1;
-//                            GlobalVariables.totalcost+=GlobalVariables.allcartitems[widget.menuitem[0]][1];
-//                            // SET BADGE AND 'PROCEED TO CART' FAB HERE
-//                            widget.badgecallback();
-                        });
-                      },
-                      elevation: 1,
-                      child: Icon(Icons.add, size: 20),
-                      backgroundColor: Colors.green[300],
-                      mini:true,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    ),
-                  )
+
                 ],
               )
             ),
@@ -955,7 +955,8 @@ class _ActualProductPageState extends State<ActualProductPage> {
                           });
                         });
                       },
-                      color: Colors.red[300],
+                      // color: Colors.red[300],
+                      color: Colors.black87,
                       textColor: Colors.white,
                       child: Row(
                         children: <Widget>[
