@@ -163,8 +163,8 @@ class _CategoryPageState extends State<CategoryPage> {
                         children: <Widget>[
                           Image.network(
                             'http://huzefam.sg-host.com/' + imagepath,
-                            height: 90,
-                            width: 90,
+                            height: 130,
+                            width: 130,
                           ),
                           SizedBox(width: 15,),
                           Expanded(
@@ -225,8 +225,8 @@ class _CategoryPageState extends State<CategoryPage> {
                         children: <Widget>[
                           Image.network(
                             'http://huzefam.sg-host.com/'+i[3].toString(),
-                            height: 90,
-                            width: 90,
+                            height: 130,
+                            width: 130,
                           ),
                           //SizedBox(width: 15,),
                           Expanded(

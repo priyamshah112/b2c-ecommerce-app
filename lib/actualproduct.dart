@@ -539,7 +539,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 ],
               ),
             ),
-            (material=="")?Container(): Padding(
+            (accessories=="")?Container(): Padding(
               padding: const EdgeInsets.only(left: 0.0, top: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

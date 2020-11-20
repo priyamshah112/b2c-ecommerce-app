@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(top: 15.0),
             child: GestureDetector(
               onTap: (){
-                FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "");
+                FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "Hey! I'm on your app.");
               },
               child: FaIcon(
                 FontAwesomeIcons.whatsapp,

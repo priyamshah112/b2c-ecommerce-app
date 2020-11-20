@@ -384,8 +384,8 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                               children: <Widget>[
                                 Image.network(
                                   'http://huzefam.sg-host.com/'+i[3].toString(),
-                                  height: 90,
-                                  width: 90,
+                                  height: 130,
+                                  width: 130,
                                 ),
                                 //SizedBox(width: 15,),
                                 Expanded(
@@ -403,11 +403,19 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                       (sale==0)?Text(
                                         innerprice.toString()+" "+GlobalVariables.currency,
                                         style: TextStyle(
-                                          fontSize: 17,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ):Row(
                                         children: [
+                                          Text(
+                                            saleprice.toString()+" "+GlobalVariables.currency+" ",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green[600]
+                                            ),
+                                          ),
                                           Text(
                                             innerprice.toString(),
                                             style: TextStyle(
@@ -418,14 +426,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                               // fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          Text(
-                                            " "+saleprice.toString()+" "+GlobalVariables.currency,
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green[600]
-                                            ),
-                                          ),
+
                                         ],
                                       ),
                                       (sale==0)?Container():Container(
