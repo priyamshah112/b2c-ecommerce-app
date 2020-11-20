@@ -833,9 +833,9 @@ class _ActualProductPageState extends State<ActualProductPage> {
               ),
             ),
             SizedBox(height: 10),
-            Divider(),
-            SizedBox(height: 10),
-            Text(
+            (related_products_list.length==0)?Container():Divider(),
+            (related_products_list.length==0)?Container():SizedBox(height: 10),
+            (related_products_list.length==0)?Container():Text(
               'RELATED PRODUCTS',
               style: TextStyle(
                 fontSize: 18,
@@ -843,8 +843,8 @@ class _ActualProductPageState extends State<ActualProductPage> {
                 color: Colors.grey[800],
               ),
             ),
-            SizedBox(height: 20),
-            SizedBox(
+            (related_products_list.length==0)?Container():SizedBox(height: 20),
+            (related_products_list.length==0)?Container():SizedBox(
               height: 280,
               width: double.infinity,
               child: (_related_products_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
