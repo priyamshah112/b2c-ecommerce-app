@@ -59,6 +59,13 @@ class _GetLocationPageState extends State<GetLocationPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0),
+                  child: Image.asset(
+                    'assets/images/ay icon.jpeg',
+                    width: 150,
+                  ),
+                ),
                 (_locationobtained==true)?Container():Container(
                   child: SpinKitFadingCircle(
                     color: Colors.black,
@@ -185,7 +192,7 @@ class _GetLocationPageState extends State<GetLocationPage> {
               });
               Future<void> confirmlocation() async{
                 print(countryname);
-                countryname="United Arab Emirates";
+                // countryname="United Arab Emirates";
                 final response = await http.post(
                     "http://huzefam.sg-host.com/getCountryInfo.php",
                     body: {

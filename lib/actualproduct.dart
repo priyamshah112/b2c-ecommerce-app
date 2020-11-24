@@ -37,6 +37,7 @@ class _ActualProductPageState extends State<ActualProductPage> {
   var color;
   var specification;
   var unit;
+  var price_unit="";
   var product_description;
   var no_of_images;
   var country_info=[];
@@ -88,6 +89,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
       color=decodedResponse['color'];
       specification=decodedResponse['specification'];
       unit=decodedResponse['unit'];
+
+      if(unit!=""){
+        price_unit=unit.substring(unit.indexOf("/")).replaceAll(new RegExp(r"\s+"), "");
+        print("price_unit="+price_unit);
+      }
+
       product_description=decodedResponse['product_description'];
       no_of_images=decodedResponse['no_of_images'];
       country_info=decodedResponse['country_info'];
@@ -323,6 +330,13 @@ class _ActualProductPageState extends State<ActualProductPage> {
                     fontSize: 22,
                   ),
                 ),
+                (price_unit!=null)?Text(
+                  price_unit,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ):Container(),
               ],
             ):Row(
               children: [
@@ -334,13 +348,20 @@ class _ActualProductPageState extends State<ActualProductPage> {
                   ),
                 ),
                 Text(
-                  saleprice.toString()+" "+currency+" ",
+                  saleprice.toString()+" "+currency,
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       // color: Colors.green[600]
                   ),
                 ),
+                (price_unit!=null)?Text(
+                  price_unit+" ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ):Container(),
                 Text(
                   price.toString()+" "+currency,
                   style: TextStyle(
