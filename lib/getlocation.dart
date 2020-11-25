@@ -202,28 +202,30 @@ class _GetLocationPageState extends State<GetLocationPage> {
                 //print(response.body);
                 var decodedResponse = json.decode(response.body);
                 print(decodedResponse);
-                if(decodedResponse['error']!="wrongcountry"){
-                  GlobalVariables.countryId=int.parse(decodedResponse['countryId']);
-                  GlobalVariables.currency=decodedResponse['currency'];
-                  GlobalVariables.contact_no=decodedResponse['contact_no'];
-                  print(GlobalVariables.countryId);
-                  print(GlobalVariables.currency);
-                  print(GlobalVariables.contact_no);
-
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  await prefs.setBool('_locationDone', true);
-                  await prefs.setInt('countryId', GlobalVariables.countryId);
-                  await prefs.setString('currency', GlobalVariables.currency);
-                  await prefs.setString('contact_no', GlobalVariables.contact_no);
-
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeApp()),
-                  );
+                if(decodedResponse['error']=="wrongcountry"){
+                  git countryname="United Arab Emirates";
                 }
+                GlobalVariables.countryId=int.parse(decodedResponse['countryId']);
+                GlobalVariables.currency=decodedResponse['currency'];
+                GlobalVariables.contact_no=decodedResponse['contact_no'];
+                print(GlobalVariables.countryId);
+                print(GlobalVariables.currency);
+                print(GlobalVariables.contact_no);
+
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('_locationDone', true);
+                await prefs.setInt('countryId', GlobalVariables.countryId);
+                await prefs.setString('currency', GlobalVariables.currency);
+                await prefs.setString('contact_no', GlobalVariables.contact_no);
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeApp()),
+                );
+                /*}
                 else{
                   _error=true;
-                }
+                }*/
 
                 setState(() {
                   _confirming=false;
