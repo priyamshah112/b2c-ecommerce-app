@@ -251,7 +251,13 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                                 child: Row(
                                                   children: <Widget>[
                                                     (sale==0)?Expanded(
-                                                      child: Text(
+                                                      child: (i[5]!="")?Text(
+                                                        innerprice.toString()+" "+GlobalVariables.currency+"/"+i[5],
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                      ):Text(
                                                         innerprice.toString()+" "+GlobalVariables.currency,
                                                         style: TextStyle(
                                                           fontSize: 18,
@@ -260,11 +266,18 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                                       ),
                                                     ):Row(
                                                       children: [
-                                                        Text(
-                                                          saleprice.toString()+" "+GlobalVariables.currency+" ",
+                                                        (i[5]!="")?Text(
+                                                          saleprice.toString()+" "+GlobalVariables.currency+"/"+i[5]+" ",
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight: FontWeight.bold,
+
+                                                          ),
+                                                        ):Text(
+                                                          saleprice.toString()+" "+GlobalVariables.currency+" ",
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.bold,
 
                                                           ),
                                                         ),
@@ -400,15 +413,28 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                         ),
                                       ),
                                       SizedBox(height: 2,),
-                                      (sale==0)?Text(
+                                      (sale==0)?((i[5]!="")?Text(
+                                        innerprice.toString()+" "+GlobalVariables.currency+"/"+i[5],
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ):Text(
                                         innerprice.toString()+" "+GlobalVariables.currency,
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                      ):Row(
+                                      )):Row(
                                         children: [
-                                          Text(
+                                          (i[5]!="")?Text(
+                                            saleprice.toString()+" "+GlobalVariables.currency+"/"+i[5]+" ",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green[600]
+                                            ),
+                                          ):Text(
                                             saleprice.toString()+" "+GlobalVariables.currency+" ",
                                             style: TextStyle(
                                                 fontSize: 18,
@@ -426,7 +452,6 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                               // fontWeight: FontWeight.bold,
                                             ),
                                           ),
-
                                         ],
                                       ),
                                       (sale==0)?Container():Container(

@@ -588,7 +588,14 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ):Row(
                                             children: [
-                                              Text(
+                                              (i[4]!="")?Text(
+                                                saleprice.toString()+" "+GlobalVariables.currency+"/"+i[4]+" ",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  // color: Colors.green[600],
+                                                ),
+                                              ):Text(
                                                 saleprice.toString()+" "+GlobalVariables.currency+" ",
                                                 style: TextStyle(
                                                   fontSize: 18,
@@ -765,7 +772,13 @@ class _HomePageState extends State<HomePage> {
                                       child: Row(
                                         children: <Widget>[
                                           (sale==0)?Expanded(
-                                            child: Text(
+                                            child:(i[4]!="")?Text(
+                                              innerprice.toString()+" "+GlobalVariables.currency+"/"+i[4],
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ):Text(
                                               innerprice.toString()+" "+GlobalVariables.currency,
                                               style: TextStyle(
                                                 fontSize: 18,
@@ -774,7 +787,14 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ):Row(
                                             children: [
-                                              Text(
+                                              (i[4]!="")?Text(
+                                                saleprice.toString()+" "+GlobalVariables.currency+"/"+i[4]+" ",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  // color: Colors.green[600],
+                                                ),
+                                              ):Text(
                                                 saleprice.toString()+" "+GlobalVariables.currency+" ",
                                                 style: TextStyle(
                                                   fontSize: 18,
