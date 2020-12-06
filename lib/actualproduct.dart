@@ -90,9 +90,15 @@ class _ActualProductPageState extends State<ActualProductPage> {
       specification=decodedResponse['specification'];
       unit=decodedResponse['unit'];
 
+      // print(unit.indexOf("/"));
       if(unit!=""){
-        price_unit=unit.substring(unit.indexOf("/")).replaceAll(new RegExp(r"\s+"), "");
-        print("price_unit="+price_unit);
+        if(unit.indexOf("/")!=-1){
+          price_unit=unit.substring(unit.indexOf("/")).replaceAll(new RegExp(r"\s+"), "");
+          print("price_unit="+price_unit);
+        }
+        else{
+          price_unit = "/"+unit;
+        }
       }
 
       product_description=decodedResponse['product_description'];

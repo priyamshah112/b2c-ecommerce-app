@@ -203,7 +203,7 @@ class _GetLocationPageState extends State<GetLocationPage> {
                 var decodedResponse = json.decode(response.body);
                 print(decodedResponse);
                 if(decodedResponse['error']=="wrongcountry"){
-                  git countryname="United Arab Emirates";
+                  countryname="United Arab Emirates";
                 }
                 GlobalVariables.countryId=int.parse(decodedResponse['countryId']);
                 GlobalVariables.currency=decodedResponse['currency'];
