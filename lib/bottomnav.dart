@@ -1,8 +1,8 @@
-import 'package:building_materials_app/addtocart.dart';
-import 'package:building_materials_app/globalvars.dart';
-import 'package:building_materials_app/home.dart';
-import 'package:flutter/material.dart';
+import 'package:Macoma/addtocart.dart';
+import 'package:Macoma/globalvars.dart';
+import 'package:Macoma/home.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter/material.dart';
 
 class HomeApp extends StatefulWidget {
   @override
@@ -10,27 +10,28 @@ class HomeApp extends StatefulWidget {
 }
 
 class _HomeAppState extends State<HomeApp> {
+  int _currentindex = 0;
 
-  int _currentindex=0;
-
-  Widget callpage(int currentIndex){
-    switch(currentIndex){
-      case 0: return HomePage(
-        cartbadgecallback: () {
-          setState(() {});
-        },
-      );
-      case 1: return AddToCartPage(
-        cartbadgecallback: () {
-          setState(() {});
-        },
-        backtohomecallback: () {
-          setState(() {
-            _currentindex=0;
-          });
-        },
-        fromHomePage: true,
-      );
+  Widget callpage(int currentIndex) {
+    switch (currentIndex) {
+      case 0:
+        return HomePage(
+          cartbadgecallback: () {
+            setState(() {});
+          },
+        );
+      case 1:
+        return AddToCartPage(
+          cartbadgecallback: () {
+            setState(() {});
+          },
+          backtohomecallback: () {
+            setState(() {
+              _currentindex = 0;
+            });
+          },
+          fromHomePage: true,
+        );
     }
   }
 
@@ -57,7 +58,8 @@ class _HomeAppState extends State<HomeApp> {
             BottomNavigationBarItem(
               icon: Badge(
                 //position: BadgePosition.topEnd(top: 10, end: 10),
-                showBadge: (GlobalVariables.total_cart_items==0)?false:true,
+                showBadge:
+                    (GlobalVariables.total_cart_items == 0) ? false : true,
                 badgeColor: Colors.red[500],
                 badgeContent: Text(
                   GlobalVariables.total_cart_items.toString(),
@@ -75,12 +77,11 @@ class _HomeAppState extends State<HomeApp> {
               title: Text("Cart"),
             ),
           ],
-          onTap: (index){
+          onTap: (index) {
             setState(() {
-              _currentindex=index;
+              _currentindex = index;
             });
-          }
-      ),
+          }),
     );
   }
 }

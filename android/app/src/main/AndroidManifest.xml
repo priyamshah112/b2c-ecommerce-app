@@ -11,7 +11,7 @@
         "android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="building_materials_app"
+        android:label="Macoma"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
