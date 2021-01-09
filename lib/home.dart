@@ -47,12 +47,16 @@ class _HomePageState extends State<HomePage> {
 
   var _stock_loading=true;
   var sale_list=[];
+  var _stock_empty = false;
+
 
   var _new_arrivals_loading=true;
   var new_arrivals_list=[];
+  var _new_arrivals_empty = false;
 
   var _featured_loading=true;
   var featured_list=[];
+  var _featured_empty = false;
 
   var _footer_loading=true;
   var footer_pic;
@@ -66,10 +70,15 @@ class _HomePageState extends State<HomePage> {
           "http://huzefam.sg-host.com/getSaleInfo.php",
       );
       var decodedResponse = json.decode(response.body);
-      // print(decodedResponse);
-      print(decodedResponse['product_info']);
-      // print(decodedResponse['product_info'][0][3]);
-      sale_list=decodedResponse['product_info'];
+      print(decodedResponse);
+      if(decodedResponse['product_info'].length!=0){
+        print("STOCK CLEARANCE DATA: " + decodedResponse['product_info']);
+        // print(decodedResponse['product_info'][0][3]);
+        sale_list=decodedResponse['product_info'];
+      }
+      else{
+        _stock_empty = true;
+      }
 
       setState(() {
         _stock_loading=false;
@@ -83,9 +92,14 @@ class _HomePageState extends State<HomePage> {
       );
       var decodedResponse = json.decode(response.body);
       // print(decodedResponse);
-      print(decodedResponse['product_info']);
+      // print(decodedResponse['product_info']);
       // print(decodedResponse['product_info'][0][3]);
-      new_arrivals_list=decodedResponse['product_info'];
+      if(decodedResponse['product_info'].length!=0) {
+        new_arrivals_list = decodedResponse['product_info'];
+      }
+      else{
+        _new_arrivals_empty = true;
+      }
 
       setState(() {
         _new_arrivals_loading=false;
@@ -99,9 +113,14 @@ class _HomePageState extends State<HomePage> {
       );
       var decodedResponse = json.decode(response.body);
       // print(decodedResponse);
-      print(decodedResponse['product_info']);
+      // print(decodedResponse['product_info']);
       // print(decodedResponse['product_info'][0][3]);
-      featured_list=decodedResponse['product_info'];
+      if(decodedResponse['product_info'].length!=0) {
+        featured_list = decodedResponse['product_info'];
+      }
+      else{
+        _featured_empty = true;
+      }
 
       setState(() {
         _featured_loading=false;
@@ -115,7 +134,7 @@ class _HomePageState extends State<HomePage> {
       );
       var decodedResponse = json.decode(response.body);
       // print(decodedResponse);
-      print(decodedResponse['image_location']);
+      // print(decodedResponse['image_location']);
       // print(decodedResponse['product_info'][0][3]);
       footer_pic=decodedResponse['image_location'].toString();
 
@@ -489,7 +508,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 280,
                 width: double.infinity,
-                child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
+                child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):(_stock_empty==true)?Text("No sale at the moment."):ListView(
                   scrollDirection: Axis.horizontal,
                   children: sale_list.map<Widget>((i){
                     var innerprice;
@@ -682,7 +701,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 280,
                 width: double.infinity,
-                child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
+                child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):(_new_arrivals_empty==true)?Text("No new arrivals at the moment."):ListView(
                   scrollDirection: Axis.horizontal,
                   children: new_arrivals_list.map<Widget>((i){
                     var innerprice;
@@ -882,7 +901,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 280,
                 width: double.infinity,
-                child: (_featured_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):ListView(
+                child: (_featured_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):(_featured_empty==true)?Text("No featured products at the moment."):ListView(
                   scrollDirection: Axis.horizontal,
                   children: featured_list.map<Widget>((i){
                     var innerprice;
