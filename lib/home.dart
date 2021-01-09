@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
         new_arrivals_list=decodedResponse['product_info'];
       }
       else{
-        _stock_empty = true;
+        _new_arrivals_empty = true;
       }
 
       setState(() {
