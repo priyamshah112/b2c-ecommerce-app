@@ -1,38 +1,36 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:building_materials_app/aboutus.dart';
-import 'package:building_materials_app/actualproduct.dart';
-import 'package:building_materials_app/addtocart.dart';
-import 'package:building_materials_app/category.dart';
-import 'package:building_materials_app/globalvars.dart';
-import 'package:building_materials_app/productcategorypage.dart';
-import 'package:building_materials_app/searchpage.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
+import 'package:Macoma/aboutus.dart';
+import 'package:Macoma/actualproduct.dart';
+import 'package:Macoma/category.dart';
+import 'package:Macoma/globalvars.dart';
+import 'package:Macoma/searchpage.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
-import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
   VoidCallback cartbadgecallback;
-  HomePage({Key key, this.cartbadgecallback}): super(key: key);
+  HomePage({Key key, this.cartbadgecallback}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex=0;
-  List cardList=[
+  int _currentIndex = 0;
+  List cardList = [
     Category1(),
     Category2(),
     Category3(),
   ];
-  List categoryNameList=[
+  List categoryNameList = [
     'Bathroom Fittings',
     'Building Materials',
     'Fasteners'
@@ -45,20 +43,19 @@ class _HomePageState extends State<HomePage> {
     return result;
   }
 
-  var _stock_loading=true;
-  var sale_list=[];
+  var _stock_loading = true;
+  var sale_list = [];
   var _stock_empty = false;
 
-
-  var _new_arrivals_loading=true;
-  var new_arrivals_list=[];
+  var _new_arrivals_loading = true;
+  var new_arrivals_list = [];
   var _new_arrivals_empty = false;
 
-  var _featured_loading=true;
-  var featured_list=[];
+  var _featured_loading = true;
+  var featured_list = [];
   var _featured_empty = false;
 
-  var _footer_loading=true;
+  var _footer_loading = true;
   var footer_pic;
 
   @override
@@ -67,10 +64,12 @@ class _HomePageState extends State<HomePage> {
 
     Future<void> stock_clearance_info() async {
       final response = await http.post(
-          "http://huzefam.sg-host.com/getSaleInfo.php",
+        "http://huzefam.sg-host.com/getSaleInfo.php",
       );
       var decodedResponse = json.decode(response.body);
-      print(decodedResponse);
+      // print(decodedResponse);
+      print(decodedResponse['product_info']);
+      // print(decodedResponse['product_info'][0][3]);
       if(decodedResponse['product_info'].length!=0){
         print("STOCK CLEARANCE DATA: " + decodedResponse['product_info']);
         // print(decodedResponse['product_info'][0][3]);
@@ -81,9 +80,10 @@ class _HomePageState extends State<HomePage> {
       }
 
       setState(() {
-        _stock_loading=false;
+        _stock_loading = false;
       });
     }
+
     stock_clearance_info();
 
     Future<void> new_arrivals_info() async {
@@ -92,19 +92,19 @@ class _HomePageState extends State<HomePage> {
       );
       var decodedResponse = json.decode(response.body);
       // print(decodedResponse);
-      // print(decodedResponse['product_info']);
-      // print(decodedResponse['product_info'][0][3]);
-      if(decodedResponse['product_info'].length!=0) {
-        new_arrivals_list = decodedResponse['product_info'];
+      if(decodedResponse['product_info'].length!=0){
+        // print(decodedResponse['product_info'][0][3]);
+        new_arrivals_list=decodedResponse['product_info'];
       }
       else{
-        _new_arrivals_empty = true;
+        _stock_empty = true;
       }
 
       setState(() {
-        _new_arrivals_loading=false;
+        _new_arrivals_loading = false;
       });
     }
+
     new_arrivals_info();
 
     Future<void> featured_info() async {
@@ -115,17 +115,19 @@ class _HomePageState extends State<HomePage> {
       // print(decodedResponse);
       // print(decodedResponse['product_info']);
       // print(decodedResponse['product_info'][0][3]);
-      if(decodedResponse['product_info'].length!=0) {
+      if(decodedResponse['product_info'].length!=0){
         featured_list = decodedResponse['product_info'];
       }
       else{
         _featured_empty = true;
       }
 
+
       setState(() {
-        _featured_loading=false;
+        _featured_loading = false;
       });
     }
+
     featured_info();
 
     Future<void> get_footer_pic() async {
@@ -136,12 +138,14 @@ class _HomePageState extends State<HomePage> {
       // print(decodedResponse);
       // print(decodedResponse['image_location']);
       // print(decodedResponse['product_info'][0][3]);
-      footer_pic=decodedResponse['image_location'].toString();
+
+      footer_pic = decodedResponse['image_location'].toString();
 
       setState(() {
-        _footer_loading=false;
+        _footer_loading = false;
       });
     }
+
     get_footer_pic();
   }
 
@@ -153,7 +157,7 @@ class _HomePageState extends State<HomePage> {
         //leading: Icon(Icons.menu),
         elevation: 5,
         title: Text(
-            'Home',
+          'Home',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 18,
@@ -164,8 +168,9 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: GestureDetector(
-              onTap: (){
-                FlutterOpenWhatsapp.sendSingleMessage(GlobalVariables.contact_no, "Hey! I'm on your app.");
+              onTap: () {
+                FlutterOpenWhatsapp.sendSingleMessage(
+                    GlobalVariables.contact_no, "Hey! I'm on your app.");
               },
               child: FaIcon(
                 FontAwesomeIcons.whatsapp,
@@ -177,7 +182,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SearchPage()),
@@ -228,9 +233,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pop(
-                    context
-                  );
+                  Navigator.pop(context);
                 },
               ),
               ExpansionTile(
@@ -245,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   InkWell(
                     child: Padding(
-                      padding: const EdgeInsets.only(left:25,bottom:8.0),
+                      padding: const EdgeInsets.only(left: 25, bottom: 8.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -257,19 +260,24 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 1,categoryName: 'Bathroom Fittings')),
+                        MaterialPageRoute(
+                            builder: (context) => CategoryPage(
+                                categoryId: 1,
+                                categoryName: 'Bathroom Fittings')),
                       ).then((value) {
                         widget.cartbadgecallback();
                       });
                     },
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   InkWell(
                     child: Padding(
-                      padding: const EdgeInsets.only(left:25,bottom:8.0),
+                      padding: const EdgeInsets.only(left: 25, bottom: 8.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -281,19 +289,24 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 2,categoryName: 'Building Materials')),
+                        MaterialPageRoute(
+                            builder: (context) => CategoryPage(
+                                categoryId: 2,
+                                categoryName: 'Building Materials')),
                       ).then((value) {
                         widget.cartbadgecallback();
                       });
                     },
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   InkWell(
                     child: Padding(
-                      padding: const EdgeInsets.only(left:25,bottom:16.0),
+                      padding: const EdgeInsets.only(left: 25, bottom: 16.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -305,10 +318,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 3,categoryName: 'Fasteners')),
+                        MaterialPageRoute(
+                            builder: (context) => CategoryPage(
+                                categoryId: 3, categoryName: 'Fasteners')),
                       ).then((value) {
                         widget.cartbadgecallback();
                       });
@@ -342,7 +357,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onTap: () {
-                  Share.share('Checkout this app: https://play.google.com/store/apps/details?id=com.example.building_materials_app', subject: 'Checkout this app', sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                  Share.share(
+                      'Checkout this app: https://play.google.com/store/apps/details?id=com.example.building_materials_app',
+                      subject: 'Checkout this app',
+                      sharePositionOrigin:
+                      box.localToGlobal(Offset.zero) & box.size);
                 },
               ),
             ],
@@ -354,7 +373,7 @@ class _HomePageState extends State<HomePage> {
           content: Text('Tap back again to leave'),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(20,20,20,0),
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
@@ -366,15 +385,18 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.grey[800],
                 ),
               ),
-              SizedBox(height:20),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 1, categoryName: 'Bathroom Fittings')),
+                        MaterialPageRoute(
+                            builder: (context) => CategoryPage(
+                                categoryId: 1,
+                                categoryName: 'Bathroom Fittings')),
                       ).then((value) {
                         widget.cartbadgecallback();
                       });
@@ -388,7 +410,7 @@ class _HomePageState extends State<HomePage> {
                         child: Image.asset(
                           'assets/images/home1.png',
 //                      height: 200,
-                        fit: BoxFit.fill,
+                          fit: BoxFit.fill,
                           width: MediaQuery.of(context).size.width * 0.5 - 25,
                         ),
                       ),
@@ -396,10 +418,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   //SizedBox(width: 10,),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 2,categoryName: 'Building Materials')),
+                        MaterialPageRoute(
+                            builder: (context) => CategoryPage(
+                                categoryId: 2,
+                                categoryName: 'Building Materials')),
                       ).then((value) {
                         widget.cartbadgecallback();
                       });
@@ -421,10 +446,12 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 10),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CategoryPage(categoryId: 3,categoryName: 'Fasteners')),
+                    MaterialPageRoute(
+                        builder: (context) => CategoryPage(
+                            categoryId: 3, categoryName: 'Fasteners')),
                   ).then((value) {
                     widget.cartbadgecallback();
                   });
@@ -495,7 +522,9 @@ class _HomePageState extends State<HomePage> {
 //                  );
 //                }),
 //              ),
-              SizedBox(height: 28,),
+              SizedBox(
+                height: 28,
+              ),
               Text(
                 'STOCK CLEARANCE SALE',
                 style: TextStyle(
@@ -508,27 +537,37 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 280,
                 width: double.infinity,
-                child: (_stock_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):(_stock_empty==true)?Text("No sale at the moment."):ListView(
+                child: (_stock_loading == true)
+                    ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                    new AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
+                ):(_stock_empty==true)?Text("No sale at the moment.")
+                    : ListView(
                   scrollDirection: Axis.horizontal,
-                  children: sale_list.map<Widget>((i){
+                  children: sale_list.map<Widget>((i) {
                     var innerprice;
                     var stock_availability;
-                    var sale=0;//0 means no sale(default), 1 means sale
+                    var sale = 0; //0 means no sale(default), 1 means sale
                     var saleprice;
                     var salepercent;
                     print(i);
-                    for(int x=0; x<i[3].length;x++){
-                       // print(i[3][x]);
-                      if(GlobalVariables.countryId.toString()==i[3][x][1]){
-                        innerprice=double.parse(i[3][x][4]);
+                    for (int x = 0; x < i[3].length; x++) {
+                      // print(i[3][x]);
+                      if (GlobalVariables.countryId.toString() ==
+                          i[3][x][1]) {
+                        innerprice = double.parse(i[3][x][4]);
                         // print("hii");
-                        stock_availability=i[3][x][5];
-                        if(i[3][x][6].length!=0){
-                          sale=1;
-                          saleprice=double.parse(i[3][x][6][1]);
-                          print("saleprice="+saleprice.toString());
-                          salepercent=(innerprice-saleprice)/innerprice*100;
-                          salepercent = num.parse(salepercent.toStringAsFixed(0));
+                        stock_availability = i[3][x][5];
+                        if (i[3][x][6].length != 0) {
+                          sale = 1;
+                          saleprice = double.parse(i[3][x][6][1]);
+                          print("saleprice=" + saleprice.toString());
+                          salepercent =
+                              (innerprice - saleprice) / innerprice * 100;
+                          salepercent =
+                              num.parse(salepercent.toStringAsFixed(0));
                           print(salepercent.toString());
                         }
                       }
@@ -555,26 +594,33 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActualProductPage(
+                                                productId:
+                                                int.parse(i[0]))),
                                   ).then((value) {
                                     widget.cartbadgecallback();
                                   });
                                 },
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .start,
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
                                   children: <Widget>[
                                     SizedBox(
                                       height: 180,
                                       width: double.infinity,
                                       child: Image.network(
-                                        'http://huzefam.sg-host.com/'+i[2],
+                                        'http://huzefam.sg-host.com/' +
+                                            i[2],
                                         fit: BoxFit.fill,
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     SizedBox(
                                       width: 180,
                                       child: Row(
@@ -584,7 +630,8 @@ class _HomePageState extends State<HomePage> {
                                               i[1],
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight:
+                                                FontWeight.w400,
                                                 color: Colors.black87,
                                               ),
                                             ),
@@ -592,44 +639,82 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     SizedBox(
                                       width: double.infinity,
                                       child: Row(
                                         children: <Widget>[
-                                          (sale==0)?Expanded(
+                                          (sale == 0)
+                                              ? Expanded(
                                             child: Text(
-                                              innerprice.toString()+" "+GlobalVariables.currency,
+                                              innerprice
+                                                  .toString() +
+                                                  " " +
+                                                  GlobalVariables
+                                                      .currency,
                                               style: TextStyle(
                                                 fontSize: 20,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight:
+                                                FontWeight.bold,
                                               ),
                                             ),
-                                          ):Row(
+                                          )
+                                              : Row(
                                             children: [
-                                              (i[4]!="")?Text(
-                                                saleprice.toString()+" "+GlobalVariables.currency+"/"+i[4]+" ",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                              (i[4] != "")
+                                                  ? Text(
+                                                saleprice
+                                                    .toString() +
+                                                    " " +
+                                                    GlobalVariables
+                                                        .currency +
+                                                    "/" +
+                                                    i[4] +
+                                                    " ",
+                                                style:
+                                                TextStyle(
+                                                  fontSize:
+                                                  18,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .bold,
                                                   // color: Colors.green[600],
                                                 ),
-                                              ):Text(
-                                                saleprice.toString()+" "+GlobalVariables.currency+" ",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                              )
+                                                  : Text(
+                                                saleprice
+                                                    .toString() +
+                                                    " " +
+                                                    GlobalVariables
+                                                        .currency +
+                                                    " ",
+                                                style:
+                                                TextStyle(
+                                                  fontSize:
+                                                  18,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .bold,
                                                   // color: Colors.green[600],
                                                 ),
                                               ),
                                               Text(
-                                                innerprice.toString(),
+                                                innerprice
+                                                    .toString(),
                                                 style: TextStyle(
-                                                  color: Colors.green[600],
-                                                  decoration: TextDecoration.lineThrough,
+                                                  color: Colors
+                                                      .green[600],
+                                                  decoration:
+                                                  TextDecoration
+                                                      .lineThrough,
                                                   fontSize: 16,
-                                                  decorationThickness: 1,
-                                                  fontWeight: FontWeight.w400,
+                                                  decorationThickness:
+                                                  1,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w400,
                                                 ),
                                               ),
                                             ],
@@ -642,11 +727,14 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          (sale==0)?Container():Padding(
+                          (sale == 0)
+                              ? Container()
+                              : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius:
+                                BorderRadius.circular(5),
                                 color: Colors.green[500],
                               ),
                               height: 20,
@@ -654,19 +742,21 @@ class _HomePageState extends State<HomePage> {
                               alignment: Alignment.topLeft,
                               child: Center(
                                 child: Text(
-                                  salepercent.toString()+'%',
+                                  salepercent.toString() + '%',
                                   style: TextStyle(
                                       fontSize: 10,
-                                      color: Colors.white
-                                  ),
+                                      color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
-                          (stock_availability=="1")?Container():Center(
+                          (stock_availability == "1")
+                              ? Container()
+                              : Center(
                             child: Container(
                               decoration: new BoxDecoration(
-                                color: Colors.red[300].withOpacity(0.40),
+                                color: Colors.red[300]
+                                    .withOpacity(0.40),
                               ),
                               height: 25,
                               width: 160,
@@ -688,7 +778,9 @@ class _HomePageState extends State<HomePage> {
                   }).toList(),
                 ),
               ),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Text(
                 'NEW ARRIVALS',
                 style: TextStyle(
@@ -701,27 +793,37 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 280,
                 width: double.infinity,
-                child: (_new_arrivals_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):(_new_arrivals_empty==true)?Text("No new arrivals at the moment."):ListView(
+                child: (_new_arrivals_loading == true)
+                    ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                    new AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
+                ):(_new_arrivals_empty==true)?Text("No new arrivals at the moment.")
+                    : ListView(
                   scrollDirection: Axis.horizontal,
-                  children: new_arrivals_list.map<Widget>((i){
+                  children: new_arrivals_list.map<Widget>((i) {
                     var innerprice;
                     var stock_availability;
-                    var sale=0;//0 means no sale(default), 1 means sale
+                    var sale = 0; //0 means no sale(default), 1 means sale
                     var saleprice;
                     var salepercent;
                     print(i);
-                    for(int x=0; x<i[3].length;x++){
+                    for (int x = 0; x < i[3].length; x++) {
                       // print(i[3][x]);
-                      if(GlobalVariables.countryId.toString()==i[3][x][1]){
-                        innerprice=double.parse(i[3][x][4]);
+                      if (GlobalVariables.countryId.toString() ==
+                          i[3][x][1]) {
+                        innerprice = double.parse(i[3][x][4]);
                         // print("hii");
-                        stock_availability=i[3][x][5];
-                        if(i[3][x][6].length!=0){
-                          sale=1;
-                          saleprice=double.parse(i[3][x][6][1]);
-                          print("saleprice="+saleprice.toString());
-                          salepercent=(innerprice-saleprice)/innerprice*100;
-                          salepercent = num.parse(salepercent.toStringAsFixed(0));
+                        stock_availability = i[3][x][5];
+                        if (i[3][x][6].length != 0) {
+                          sale = 1;
+                          saleprice = double.parse(i[3][x][6][1]);
+                          print("saleprice=" + saleprice.toString());
+                          salepercent =
+                              (innerprice - saleprice) / innerprice * 100;
+                          salepercent =
+                              num.parse(salepercent.toStringAsFixed(0));
                           print(salepercent.toString());
                         }
                       }
@@ -748,26 +850,33 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActualProductPage(
+                                                productId:
+                                                int.parse(i[0]))),
                                   ).then((value) {
                                     widget.cartbadgecallback();
                                   });
                                 },
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .start,
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
                                   children: <Widget>[
                                     SizedBox(
-                                      height:180,
+                                      height: 180,
                                       width: double.infinity,
                                       child: Image.network(
-                                        'http://huzefam.sg-host.com/'+i[2],
+                                        'http://huzefam.sg-host.com/' +
+                                            i[2],
                                         fit: BoxFit.fill,
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     SizedBox(
                                       width: 180,
                                       child: Row(
@@ -777,7 +886,8 @@ class _HomePageState extends State<HomePage> {
                                               i[1],
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight:
+                                                FontWeight.w400,
                                                 color: Colors.black87,
                                               ),
                                             ),
@@ -785,50 +895,101 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     SizedBox(
                                       width: double.infinity,
                                       child: Row(
                                         children: <Widget>[
-                                          (sale==0)?Expanded(
-                                            child:(i[4]!="")?Text(
-                                              innerprice.toString()+" "+GlobalVariables.currency+"/"+i[4],
-                                              style: TextStyle(
+                                          (sale == 0)
+                                              ? Expanded(
+                                            child: (i[4] != "")
+                                                ? Text(
+                                              innerprice
+                                                  .toString() +
+                                                  " " +
+                                                  GlobalVariables
+                                                      .currency +
+                                                  "/" +
+                                                  i[4],
+                                              style:
+                                              TextStyle(
                                                 fontSize: 18,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight:
+                                                FontWeight
+                                                    .bold,
                                               ),
-                                            ):Text(
-                                              innerprice.toString()+" "+GlobalVariables.currency,
-                                              style: TextStyle(
+                                            )
+                                                : Text(
+                                              innerprice
+                                                  .toString() +
+                                                  " " +
+                                                  GlobalVariables
+                                                      .currency,
+                                              style:
+                                              TextStyle(
                                                 fontSize: 18,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight:
+                                                FontWeight
+                                                    .bold,
                                               ),
                                             ),
-                                          ):Row(
+                                          )
+                                              : Row(
                                             children: [
-                                              (i[4]!="")?Text(
-                                                saleprice.toString()+" "+GlobalVariables.currency+"/"+i[4]+" ",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                              (i[4] != "")
+                                                  ? Text(
+                                                saleprice
+                                                    .toString() +
+                                                    " " +
+                                                    GlobalVariables
+                                                        .currency +
+                                                    "/" +
+                                                    i[4] +
+                                                    " ",
+                                                style:
+                                                TextStyle(
+                                                  fontSize:
+                                                  18,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .bold,
                                                   // color: Colors.green[600],
                                                 ),
-                                              ):Text(
-                                                saleprice.toString()+" "+GlobalVariables.currency+" ",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                              )
+                                                  : Text(
+                                                saleprice
+                                                    .toString() +
+                                                    " " +
+                                                    GlobalVariables
+                                                        .currency +
+                                                    " ",
+                                                style:
+                                                TextStyle(
+                                                  fontSize:
+                                                  18,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .bold,
                                                   // color: Colors.green[600],
                                                 ),
                                               ),
                                               Text(
-                                                innerprice.toString(),
+                                                innerprice
+                                                    .toString(),
                                                 style: TextStyle(
-                                                  color: Colors.green[600],
-                                                  decoration: TextDecoration.lineThrough,
+                                                  color: Colors
+                                                      .green[600],
+                                                  decoration:
+                                                  TextDecoration
+                                                      .lineThrough,
                                                   fontSize: 16,
-                                                  decorationThickness: 1,
-                                                  fontWeight: FontWeight.w400,
+                                                  decorationThickness:
+                                                  1,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w400,
                                                   // fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -842,11 +1003,14 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          (sale==0)?Container():Padding(
+                          (sale == 0)
+                              ? Container()
+                              : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius:
+                                BorderRadius.circular(5),
                                 color: Colors.green[500],
                               ),
                               height: 20,
@@ -854,19 +1018,21 @@ class _HomePageState extends State<HomePage> {
                               alignment: Alignment.topLeft,
                               child: Center(
                                 child: Text(
-                                  salepercent.toString()+'%',
+                                  salepercent.toString() + '%',
                                   style: TextStyle(
                                       fontSize: 10,
-                                      color: Colors.white
-                                  ),
+                                      color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
-                          (stock_availability=="1")?Container():Center(
+                          (stock_availability == "1")
+                              ? Container()
+                              : Center(
                             child: Container(
                               decoration: new BoxDecoration(
-                                color: Colors.red[300].withOpacity(0.40),
+                                color: Colors.red[300]
+                                    .withOpacity(0.40),
                               ),
                               height: 25,
                               width: 160,
@@ -888,7 +1054,9 @@ class _HomePageState extends State<HomePage> {
                   }).toList(),
                 ),
               ),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Text(
                 'FEATURED',
                 style: TextStyle(
@@ -901,12 +1069,19 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 280,
                 width: double.infinity,
-                child: (_featured_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):(_featured_empty==true)?Text("No featured products at the moment."):ListView(
+                child: (_featured_loading == true)
+                    ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                    new AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
+                ):(_featured_empty==true)?Text("No featured products at the moment.")
+                    : ListView(
                   scrollDirection: Axis.horizontal,
-                  children: featured_list.map<Widget>((i){
+                  children: featured_list.map<Widget>((i) {
                     var innerprice;
                     var stock_availability;
-                    var sale=0;//0 means no sale(default), 1 means sale
+                    var sale = 0; //0 means no sale(default), 1 means sale
                     var saleprice;
                     var salepercent;
                     print(i);
@@ -948,26 +1123,33 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => ActualProductPage(productId: int.parse(i[0]))),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActualProductPage(
+                                                productId:
+                                                int.parse(i[0]))),
                                   ).then((value) {
                                     widget.cartbadgecallback();
                                   });
                                 },
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .start,
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
                                   children: <Widget>[
                                     SizedBox(
                                       height: 180,
                                       width: double.infinity,
                                       child: Image.network(
-                                        'http://huzefam.sg-host.com/'+i[2].toString(),
+                                        'http://huzefam.sg-host.com/' +
+                                            i[2].toString(),
                                         fit: BoxFit.fill,
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     SizedBox(
                                       width: 180,
                                       child: Row(
@@ -977,7 +1159,8 @@ class _HomePageState extends State<HomePage> {
                                               i[1],
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight:
+                                                FontWeight.w400,
                                                 color: Colors.black87,
                                               ),
                                             ),
@@ -985,7 +1168,9 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     /*SizedBox(
                                       width: 150,
                                       child: Row(
@@ -1079,13 +1264,19 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 20),
               //Footer
               Container(
-                height:200,
+                height: 200,
                 width: MediaQuery.of(context).size.width * 0.5 - 40,
-                child: (_footer_loading==true)?Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),):Image.network(
-                  'http://huzefam.sg-host.com/'+footer_pic,
+                child: (_footer_loading == true)
+                    ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                    new AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
+                )
+                    : Image.network(
+                  'http://huzefam.sg-host.com/' + footer_pic,
                 ),
               )
-
             ],
           ),
         ),
@@ -1093,7 +1284,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 // Carousel Categories
 class Category1 extends StatelessWidget {
@@ -1107,9 +1297,9 @@ class Category1 extends StatelessWidget {
 //            stops: [0.3, 1],
 //            colors: [Color(0xff5f2c82), Color(0xff49a09d)]
 //        ),
-          image: DecorationImage(
-            image: AssetImage("assets/images/SBF white.png"),
-            fit: BoxFit.cover,
+        image: DecorationImage(
+          image: AssetImage("assets/images/SBF white.png"),
+          fit: BoxFit.cover,
         ),
       ),
       child: new BackdropFilter(
