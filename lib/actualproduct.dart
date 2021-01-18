@@ -41,12 +41,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
   var product_description;
   var no_of_images;
   var country_info = [];
-  var price;
+  var price=0.0;
   var stock_availability;
-  var currency;
+  var currency="AED";
   var sale = 0; //0 means no sale(default), 1 means sale
-  var saleprice;
-  var salepercent;
+  var saleprice=0.0;
+  var salepercent=0.0;
 
   int quantity = 0;
   var _loading = true;
@@ -980,12 +980,12 @@ class _ActualProductPageState extends State<ActualProductPage> {
                                   scrollDirection: Axis.horizontal,
                                   children:
                                       related_products_list.map<Widget>((i) {
-                                    var innerprice;
+                                    var innerprice=0.0;
                                     var stock_availability;
                                     var sale =
                                         0; //0 means no sale(default), 1 means sale
-                                    var saleprice;
-                                    var salepercent;
+                                    var saleprice=0.0;
+                                    var salepercent=0.0;
                                     print(i);
                                     for (int x = 0; x < i[3].length; x++) {
                                       // print(i[3][x]);

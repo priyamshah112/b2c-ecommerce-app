@@ -172,12 +172,12 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
                                 children: series_list.map<Widget>((i) {
-                                  var innerprice;
+                                  var innerprice=0.0;
                                   var stock_availability;
                                   var sale =
                                       0; //0 means no sale(default), 1 means sale
-                                  var saleprice;
-                                  var salepercent;
+                                  var saleprice=0.0;
+                                  var salepercent=0.0;
                                   // print(i);
                                   for (int x = 0; x < i[4].length; x++) {
                                     // print(i[4][x][1]);
@@ -432,11 +432,11 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                       return Column(
                         children: series_list.map<Widget>((i) {
                           //print(i);
-                          var innerprice;
+                          var innerprice=0.0;
                           var stock_availability;
                           var sale = 0; //0 means no sale(default), 1 means sale
-                          var saleprice;
-                          var salepercent;
+                          var saleprice=0.0;
+                          var salepercent=0.0;
                           // print(i);
                           for (int x = 0; x < i[4].length; x++) {
                             // print(i[4][x][1]);

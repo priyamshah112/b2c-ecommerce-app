@@ -547,11 +547,11 @@ class _HomePageState extends State<HomePage> {
                     : ListView(
                   scrollDirection: Axis.horizontal,
                   children: sale_list.map<Widget>((i) {
-                    var innerprice;
+                    var innerprice=0.0;
                     var stock_availability;
                     var sale = 0; //0 means no sale(default), 1 means sale
-                    var saleprice;
-                    var salepercent;
+                    var saleprice=0.0;
+                    var salepercent=0.0;
                     print(i);
                     for (int x = 0; x < i[3].length; x++) {
                       // print(i[3][x]);
@@ -803,11 +803,11 @@ class _HomePageState extends State<HomePage> {
                     : ListView(
                   scrollDirection: Axis.horizontal,
                   children: new_arrivals_list.map<Widget>((i) {
-                    var innerprice;
+                    var innerprice=0.0;
                     var stock_availability;
                     var sale = 0; //0 means no sale(default), 1 means sale
-                    var saleprice;
-                    var salepercent;
+                    var saleprice=0.0;
+                    var salepercent=0.0;
                     print(i);
                     for (int x = 0; x < i[3].length; x++) {
                       // print(i[3][x]);
