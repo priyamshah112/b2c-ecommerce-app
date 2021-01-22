@@ -66,9 +66,61 @@ class _HomePageState extends State<HomePage> {
   StreamSubscription connectivitySubscription;
   bool dialogshown = false;
 
+  ConnectivityResult previous;
+  bool _haveInternet = false;
+
+  Future<bool> checkinternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        _haveInternet = true;
+        return Future.value(true);
+      }
+    } on SocketException catch (_) {
+      _haveInternet = false;
+      return Future.value(false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
+    try {
+      InternetAddress.lookup('google.com').then((result){
+        if(result.isNotEmpty && result[0].rawAddress.isNotEmpty){
+          // internet conn available
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+          //     imageui(),
+          // ));
+          _haveInternet = true;
+        }else{
+          // no conn
+          _showdialog();
+        }
+      }).catchError((error){
+        // no conn
+        _showdialog();
+      });
+    } on SocketException catch (_){
+      // no internet
+      _showdialog();
+    }
+
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult connresult){
+      if(connresult == ConnectivityResult.none){
+
+      }else if(previous == ConnectivityResult.none){
+        // internet conn
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+        //     imageui(),
+        // ));
+        _haveInternet = true;
+      }
+
+      previous = connresult;
+    });
 
     connectivitySubscription = Connectivity()
         .onConnectivityChanged
@@ -216,22 +268,39 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  Future<bool> checkinternet() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return Future.value(true);
-      }
-    } on SocketException catch (_) {
-      return Future.value(false);
-    }
-  }
+  // Future<bool> checkinternet() async {
+  //   try {
+  //     final result = await InternetAddress.lookup('google.com');
+  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //       return Future.value(true);
+  //     }
+  //   } on SocketException catch (_) {
+  //     return Future.value(false);
+  //   }
+  // }
 
   @override
   void dispose() {
     super.dispose();
 
     connectivitySubscription.cancel();
+  }
+
+  void _showdialog(){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('ERROR'),
+        content: Text("No Internet Detected."),
+        actions: <Widget>[
+          FlatButton(
+            // method to exit application programitacally
+            onPressed: () => SystemChannels.platform.invokeMethod('Systemnavigator.pop'),
+            child: Text("Exit"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
