@@ -1,10 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:Macoma/bottomnav.dart';
 import 'package:Macoma/globalvars.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,10 +25,86 @@ class _GetLocationPageState extends State<GetLocationPage> {
   bool _locationobtained = false;
   bool _confirming = false;
   bool _error = false;
+  bool _haveInternet = false;
+
+  ConnectivityResult _previousResult;
+  bool dialogshown = false;
+
+  ConnectivityResult previous;
+  StreamSubscription connectivitySubscription;
+
+  Future<bool> checkinternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        _haveInternet = true;
+
+        Future<void> getCountryName() async {
+          Position position = await Geolocator()
+              .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+          print("position=");
+          debugPrint('location: ${position.latitude}');
+          final coordinates =
+          new Coordinates(position.latitude, position.longitude);
+          var addresses =
+          await Geocoder.local.findAddressesFromCoordinates(coordinates);
+          var first = addresses.first;
+          print(first.countryName); // this will return country name
+          countryname = first.countryName;
+          setState(() {
+            _locationobtained = true;
+          });
+        }
+        getCountryName();
+
+        return Future.value(true);
+      }
+    } on SocketException catch (_) {
+      _haveInternet = false;
+      return Future.value(false);
+    }
+  }
+
 
   @override
   void initState() {
     super.initState();
+
+    try {
+      InternetAddress.lookup('google.com').then((result){
+        if(result.isNotEmpty && result[0].rawAddress.isNotEmpty){
+          // internet conn available
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+          //     imageui(),
+          // ));
+          _haveInternet = true;
+        }else{
+          // no conn
+          _showdialog();
+        }
+      }).catchError((error){
+        // no conn
+        _showdialog();
+      });
+    } on SocketException catch (_){
+      // no internet
+      _showdialog();
+    }
+
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult connresult){
+      if(connresult == ConnectivityResult.none){
+
+      }else if(previous == ConnectivityResult.none){
+        // internet conn
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>
+        //     imageui(),
+        // ));
+        _haveInternet = true;
+      }
+
+      previous = connresult;
+    });
 
     Future<void> getCountryName() async {
       Position position = await Geolocator()
@@ -42,8 +122,93 @@ class _GetLocationPageState extends State<GetLocationPage> {
         _locationobtained = true;
       });
     }
+    if(_haveInternet==true){
+      getCountryName();
+    }
 
-    getCountryName();
+    connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult connresult) {
+      print("on change called");
+      print(connresult);
+      // if (connresult == ConnectivityResult.none) {
+      //   dialogshown = true;
+      //   print("NO INTERNET");
+      checkinternet().then((result) {
+        print("result of check internet="+result.toString());
+        if (result == false) {
+          dialogshown = true;
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            child: AlertDialog(
+              title: Text(
+                "Error",
+              ),
+              content: Text(
+                "No Data Connection Available.",
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () =>
+                  {
+                    SystemChannels.platform.invokeMethod(
+                        'SystemNavigator.pop'),
+                  },
+                  child: Text("Exit."),
+                ),
+              ],
+            ),
+          );
+        }
+        else {
+          print("YES INTERNET");
+          if (dialogshown == true) {
+            dialogshown = false;
+            Navigator.pop(context);
+          }
+        }
+      });
+      // } else if (_previousResult == ConnectivityResult.none) {
+      //   checkinternet().then((result) {
+      //     if (result == true) {
+      //       print("YES INTERNET");
+      //       if (dialogshown == true) {
+      //         dialogshown = false;
+      //         Navigator.pop(context);
+      //       }
+      //     }
+      //   });
+      // }
+
+      _previousResult = connresult;
+    });
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    connectivitySubscription.cancel();
+  }
+
+
+  void _showdialog(){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('ERROR'),
+        content: Text("No Internet Detected."),
+        actions: <Widget>[
+          FlatButton(
+            // method to exit application programitacally
+            onPressed: () => SystemChannels.platform.invokeMethod('Systemnavigator.pop'),
+            child: Text("Exit"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

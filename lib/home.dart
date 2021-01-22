@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:Macoma/aboutus.dart';
@@ -6,10 +8,12 @@ import 'package:Macoma/actualproduct.dart';
 import 'package:Macoma/category.dart';
 import 'package:Macoma/globalvars.dart';
 import 'package:Macoma/searchpage.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -58,9 +62,71 @@ class _HomePageState extends State<HomePage> {
   var _footer_loading = true;
   var footer_pic;
 
+  ConnectivityResult _previousResult;
+  StreamSubscription connectivitySubscription;
+  bool dialogshown = false;
+
   @override
   void initState() {
     super.initState();
+
+    connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult connresult) {
+      print("on change called");
+      print(connresult);
+      // if (connresult == ConnectivityResult.none) {
+      //   dialogshown = true;
+      //   print("NO INTERNET");
+      checkinternet().then((result) {
+        print("result of check internet="+result.toString());
+        if (result == false) {
+          dialogshown = true;
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            child: AlertDialog(
+              title: Text(
+                "Error",
+              ),
+              content: Text(
+                "No Data Connection Available.",
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () =>
+                  {
+                    SystemChannels.platform.invokeMethod(
+                        'SystemNavigator.pop'),
+                  },
+                  child: Text("Exit."),
+                ),
+              ],
+            ),
+          );
+        }
+        else {
+          print("YES INTERNET");
+          if (dialogshown == true) {
+            dialogshown = false;
+            Navigator.pop(context);
+          }
+        }
+      });
+      // } else if (_previousResult == ConnectivityResult.none) {
+      //   checkinternet().then((result) {
+      //     if (result == true) {
+      //       print("YES INTERNET");
+      //       if (dialogshown == true) {
+      //         dialogshown = false;
+      //         Navigator.pop(context);
+      //       }
+      //     }
+      //   });
+      // }
+
+      _previousResult = connresult;
+    });
 
     Future<void> stock_clearance_info() async {
       final response = await http.post(
@@ -147,6 +213,25 @@ class _HomePageState extends State<HomePage> {
     }
 
     get_footer_pic();
+  }
+
+
+  Future<bool> checkinternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return Future.value(true);
+      }
+    } on SocketException catch (_) {
+      return Future.value(false);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    connectivitySubscription.cancel();
   }
 
   @override

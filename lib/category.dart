@@ -1,10 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:Macoma/actualproduct.dart';
 import 'package:Macoma/addtocart.dart';
 import 'package:Macoma/globalvars.dart';
 import 'package:badges/badges.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'productcategorypage.dart';
@@ -21,6 +25,20 @@ class _CategoryPageState extends State<CategoryPage> {
   var product_category = [];
   //var products_no_category=[];
   var _loading = true;
+
+  ConnectivityResult _previousResult;
+  StreamSubscription connectivitySubscription;
+  bool dialogshown = false;
+  Future<bool> checkinternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return Future.value(true);
+      }
+    } on SocketException catch (_) {
+      return Future.value(false);
+    }
+  }
 
   @override
   void initState() {
@@ -45,6 +63,73 @@ class _CategoryPageState extends State<CategoryPage> {
     }
 
     category_info();
+
+    connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult connresult) {
+      print("on change called");
+      print(connresult);
+      // if (connresult == ConnectivityResult.none) {
+      //   dialogshown = true;
+      //   print("NO INTERNET");
+        checkinternet().then((result) {
+          print("result of check internet="+result.toString());
+          if (result == false) {
+            dialogshown = true;
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              child: AlertDialog(
+                title: Text(
+                  "Error",
+                ),
+                content: Text(
+                  "No Data Connection Available.",
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () =>
+                    {
+                      SystemChannels.platform.invokeMethod(
+                          'SystemNavigator.pop'),
+                    },
+                    child: Text("Exit."),
+                  ),
+                ],
+              ),
+            );
+          }
+          else {
+            print("YES INTERNET");
+            if (dialogshown == true) {
+              dialogshown = false;
+              Navigator.pop(context);
+            }
+          }
+        });
+      // } else if (_previousResult == ConnectivityResult.none) {
+      //   checkinternet().then((result) {
+      //     if (result == true) {
+      //       print("YES INTERNET");
+      //       if (dialogshown == true) {
+      //         dialogshown = false;
+      //         Navigator.pop(context);
+      //       }
+      //     }
+      //   });
+      // }
+
+      _previousResult = connresult;
+    });
+  }
+
+
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    connectivitySubscription.cancel();
   }
 
   @override
