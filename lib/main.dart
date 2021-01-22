@@ -6,6 +6,10 @@ import 'package:Macoma/globalvars.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:Macoma/services/connectivity_service.dart';
+import 'package:provider/provider.dart';
+import 'enums/connectivity_status.dart';
+import 'package:Macoma/InternetStatusChecker.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,8 +58,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     if (_locationDone == -1) {
-      return MaterialApp(
-        title: 'Flutter Demo',
+      return StreamProvider<ConnectivityStatus>(
+          builder: (context) => ConnectivityService().connectionStatusController,
+          child:NetworkSensitive(
+            child: MaterialApp(
+        title: 'Macoma',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -75,11 +82,14 @@ class _MyAppState extends State<MyApp> {
                 ),
               )),
         ),
+      ),
+          ),
       );
+
     }
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Macoma',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
